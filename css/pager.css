@@ -1,0 +1,7 @@
+ul.pagination1 li { list-style: none; padding-left: 8px;}
+ul.simplePagerNav { clear: both; position: absolute; top: 515px; left: 260px;}
+ul.simplePagerNav li { display: block; float: left; margin: 0 3px; font-family: "Trebuchet MS", Arial, Helvetica, sans-serif; font-weight: bold; font-size: 13px; padding: 4px; background: #f2eaca;}
+ul.simplePagerNav li a { color: #11522e; padding: 4px;}
+li.currentPage { background: #11522e !important;}
+ul.simplePagerNav li.currentPage a { color: #f2eaca !important;}
+

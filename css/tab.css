@@ -1,0 +1,8 @@
+.tab-wrap{ position:relative; float:left; width:701px; margin-top:30px;}
+.tabs { float: left; margin: 0; padding: 0; width: 100%; list-style: none; }
+.tabs li { float: left; position: relative; width:232px; margin: 10px 0 0 0; padding:5px 0; background: #f3f3f3; border: 1px solid #d0d0d0;		font-family:Tahoma, Geneva, sans-serif; font-size:14px; color:#3b3b3b; text-decoration:none; text-align:center; cursor: pointer; }
+.tabs li:hover { background:#edebeb; }	
+.tabs li.active{ background: #fff; border-bottom: none;	margin:0 !important; padding-top:15px;}
+.tab_container { border: 1px solid #d0d0d0; border-top: none; clear: both; float: left;  width: 696px; background: #fff; margin-top:-1px;}
+.tab-con{display: none; padding:30px 20px 5px;}
+
