@@ -70,7 +70,7 @@ Route::get('cms/dashboard', array(
     'uses' => 'cms\BaseController@getCmsIndex'
 ));
 
-Route::get('cms/product/list/{subcategory}', array(
+Route::get('cms/product/list/{subcategory?}', array(
 	'as'=>'cms-list-product',
 	'uses'=>'cms\BaseController@getListProducts'
 ))->where(['subcategory' => '[A-Za-z-]+']);
