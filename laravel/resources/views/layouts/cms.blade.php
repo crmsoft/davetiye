@@ -8,6 +8,7 @@
 <head>
     <meta charset="utf-8" />
     <title>Taksitle Reklam - {!! Session::get('title') !!}</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1" name="viewport" />
     <meta content="" name="description" />
@@ -36,7 +37,6 @@
     {!! Html::style('css/print.css', array('media'=>'print')) !!}
     {!! Html::style('plugins/jcrop/css/jquery.Jcrop.min.css') !!}
     {!! Html::style('css/custom/custom.css') !!}
-    {!! Html::style('bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css') !!}
     {!! Html::style('bower_components/datatables/media/css/jquery.dataTables.min.css') !!}
     <!-- END THEME STYLES -->
     <!-- POLYMER COMPONENTS -->
@@ -178,5 +178,14 @@
         Index.init();
     });
 </script>
+
+    @if(Route::currentRouteName() == 'cms-list-sub-category')
+        {!! Html::style('bower_components/dropzone/dist/min/basic.min.css') !!}
+        {!! Html::style('bower_components/dropzone/dist/min/dropzone.min.css') !!}
+        {!! Html::script('bower_components/dropzone/dist/min/dropzone.min.js') !!}
+        {!! Html::script('scripts/custom/single-file-upload.js') !!}
+    @endif
+
+
 </body>
 </html>

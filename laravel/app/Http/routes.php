@@ -122,3 +122,8 @@ Route::post('cms/insert/product/stage/3',[
 	'as'=>'cms-post-insert-product-stage-3',
 	'uses'=>'cms\FormController@postCheckInStage3'
 ]);
+
+Route::post('cms/update/form/picture',[
+   'as' => 'cms-post-update-form-picture',
+    'uses' => 'cms\FormController@postUpdatePicture'
+]);

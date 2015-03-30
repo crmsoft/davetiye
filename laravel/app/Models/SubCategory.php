@@ -5,7 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 class SubCategory extends Model {
 
     protected $table = 'T_SubCategory';
-    protected $primaryKey = 'ID';
+    protected $primaryKey = 'SubCategoryID';
 
     public function category(){
         return $this->belongsTo('Category', 'CategoryID');

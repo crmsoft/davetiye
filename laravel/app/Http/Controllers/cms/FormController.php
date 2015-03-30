@@ -20,6 +20,8 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
+use App\Models\SubCategory;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class FormController extends Controller{
 /*
@@ -193,5 +195,33 @@ class FormController extends Controller{
             return $e->getCode();
         }
         return true;
+    }
+
+    public function postUpdatePicture(){
+
+        $response = 'fail';
+        if( Input::hasFile('file') && Input::has('relation') ){
+            $file = Input::file('file');
+            $arr = explode('-',Input::get('relation'));
+            if(isset($arr[0]) && isset($arr[1])){
+                if( $arr[0] == 'subcategory' ){
+                    $data = SubCategory::find($arr[1]);
+
+                    $image = Image::make($file->getRealPath())->fit(239, 239);
+                    $fileName = time().'.'.$file->getClientOriginalExtension();
+                    $data->Image = $fileName;
+                    $image->save('/var/www/html/taksitle.com/img/thumbs/'.$fileName);
+
+                    $image = Image::make($file->getRealPath())->fit(555, 555);
+                    $image->save('/var/www/html/taksitle.com/img/big/'.$fileName);
+
+                    if( $data->save() ){
+                        $response = 'ok';
+                    }
+                }
+            }
+        }
+
+        return $response;
     }
 }
