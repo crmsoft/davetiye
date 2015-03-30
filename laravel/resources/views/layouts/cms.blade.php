@@ -132,6 +132,12 @@
                         </li>
                     </ul>
                 </li>
+                <li class="start {!! Route::currentRouteName() == 'cms-list-sub-category' ? 'active':'' !!}">
+                    <a href="{!! route('cms-list-sub-category') !!}">
+                        <i class="fa fa-shopping-cart"></i><span class="title"> Alt Kategoriler
+                        </span><span class="selected "></span>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>

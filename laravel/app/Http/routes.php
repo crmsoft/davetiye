@@ -65,10 +65,15 @@ Route::get('cms/auth/logout', array(
 
 //////////------------end--------AUTH-------------////////////
 
-Route::get('cms/product/list', array(
+Route::get('cms/dashboard', array(
+    'as' => 'cms-index',
+    'uses' => 'cms\BaseController@getCmsIndex'
+));
+
+Route::get('cms/product/list/{subcategory}', array(
 	'as'=>'cms-list-product',
 	'uses'=>'cms\BaseController@getListProducts'
-));
+))->where(['subcategory' => '[A-Za-z-]+']);
 
 Route::get('cms/product/add', array(
 	'as'=>'cms-add-product',
@@ -85,10 +90,11 @@ Route::get('cms/product/add/step/2', array(
 	'uses'=>'cms\BaseController@getAddProductStep2'
 ));
 
-Route::get('cms/dashboard', array(
-	'as' => 'cms-index',
-	'uses' => 'cms\BaseController@getCmsIndex'
-));
+Route::get('cms/sub-category/list',[
+   'as' => 'cms-list-sub-category',
+    'uses' => 'cms\SubController@getSubCategoryList'
+]);
+
 
 ///////////--------CMS-------POST----REQUESTS--GOES--HERE--------////////
 

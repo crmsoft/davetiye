@@ -17,6 +17,7 @@ use App\Models\SubCategory;
 use League\Flysystem\Exception;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\Utils\Utills;
 
 class BaseController extends Controller{
 
@@ -29,15 +30,25 @@ class BaseController extends Controller{
         return view('cms.dashboard');
     }
 
-    public function getListProducts(){
+    public function getListProducts( $sb = null ){
 
         Session::put('title','Ürünler Listesi');
         try {
-            $all_products = Product::join('T_SubCategory', 'T_Product.SubCategoryID', '=', 'T_SubCategory.SubCategoryID')
-                                    ->leftJoin('T_ProductGallery', 'T_Product.ProductID', '=', 'T_ProductGallery.ProductID')
-                                    ->ODate()
-                                    ->groupBy('T_Product.ProductID')
-                                    ->get( array('T_Product.*', 'T_ProductGallery.imageName as img', 'T_SubCategory.Title as subcategory') );
+            if($sb){
+                $u = new Utills();
+                $all_products = Product::join('T_SubCategory', 'T_Product.SubCategoryID', '=', 'T_SubCategory.SubCategoryID')
+                    ->leftJoin('T_ProductGallery', 'T_Product.ProductID', '=', 'T_ProductGallery.ProductID')
+                    ->where('T_SubCategory.Title', $u->removeSlahes( $sb ) )
+                    ->ODate()
+                    ->groupBy('T_Product.ProductID')
+                    ->get( array('T_Product.*', 'T_ProductGallery.imageName as img', 'T_SubCategory.Title as subcategory') );
+            }else {
+                $all_products = Product::join('T_SubCategory', 'T_Product.SubCategoryID', '=', 'T_SubCategory.SubCategoryID')
+                    ->leftJoin('T_ProductGallery', 'T_Product.ProductID', '=', 'T_ProductGallery.ProductID')
+                    ->ODate()
+                    ->groupBy('T_Product.ProductID')
+                    ->get(array('T_Product.*', 'T_ProductGallery.imageName as img', 'T_SubCategory.Title as subcategory'));
+            }
         }catch (Exception $e){
             dd($e);
         }
