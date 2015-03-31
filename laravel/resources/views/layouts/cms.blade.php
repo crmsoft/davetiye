@@ -18,6 +18,7 @@
           rel="stylesheet" type="text/css" />
     {!! Html::style('plugins/font-awesome/css/font-awesome.min.css') !!}
     {!! Html::style('plugins/bootstrap/css/bootstrap.min.css') !!}
+    {!! Html::style('plugins/bootstrap-switch/css/bootstrap-switch.min.css') !!}
     {!! Html::style('plugins/uniform/css/uniform.default.css') !!}
     <!-- END GLOBAL MANDATORY STYLES -->
     <!-- BEGIN PAGE LEVEL PLUGIN STYLES -->
@@ -160,17 +161,21 @@
 {!! Html::script('plugins/jcrop/js/jquery.Jcrop.js') !!}
 {!! Html::script('plugins/jquery-ui/jquery-ui-1.10.3.custom.min.js') !!}
 {!! Html::script('plugins/bootstrap/js/bootstrap.min.js') !!}
+{!! Html::script('plugins/bootstrap-switch/js/bootstrap-switch.min.js') !!}
 {!! Html::script('plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js') !!}
-{!! Html::script('plugins/jquery-slimscroll/jquery.slimscroll.min.js') !!}
 {!! Html::script('plugins/jquery.blockui.min.js') !!}
 {!! Html::script('plugins/jquery.cokie.min.js') !!}
 {!! Html::script('plugins/uniform/jquery.uniform.min.js') !!}
 {!! Html::script('plugins/fullcalendar/fullcalendar/fullcalendar.min.js') !!}
 {!! Html::script('plugins/jquery-easy-pie-chart/jquery.easy-pie-chart.js') !!}
 {!! Html::script('plugins/jquery.sparkline.min.js') !!}
+
+{!! Html::script('plugins/fuelux/js/spinner.min.js') !!}
+
 {!! HTML::script('scripts/core/app.js') !!}
 {!! Html::script('scripts/custom/index.js') !!}
 {!! Html::script('scripts/custom/tasks.js') !!}
+
 <!-- END PAGE LEVEL SCRIPTS -->
 <script>
     jQuery(document).ready(function () {

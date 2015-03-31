@@ -158,3 +158,6 @@ div.checks-container{
 .sub-property .input-group{
     margin-left: 14px;
 }
+.c-mr-on-span span{
+    margin-right: 0 !important;
+}

@@ -14,6 +14,8 @@ $(document).ready(function(){
         success: function( file, response, eProgress ){
             if( response === 'ok' ){
                 alert('Uploaded ok');
+                $('#fileChooser').modal('toggle');
+                this.removeAllFiles();
             }else{
                 alert('Failed');
             }
@@ -47,4 +49,8 @@ $(document).ready(function(){
         current = event.target;
         $('#fileChooser').modal();
     });
+
+    $('#spinner1').spinner();
+    $('#active_pop_up_form').bootstrapSwitch();
+    $('div.bootstrap-switch-container').css('width','155px');
 });

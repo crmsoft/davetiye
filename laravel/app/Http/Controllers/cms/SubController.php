@@ -7,12 +7,17 @@
  */
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use Illuminate\Support\Facades\DB;
 use App\Models\SubCategory;
-
+use Session;
 class SubController extends Controller{
 
     public function getSubCategoryList(){
+
+        Session::put('title','Alt Kategori Datayları');
+
+         $cats = Category::Active()->get();
 
         $subs = SubCategory::leftJoin('T_Product', 'T_SubCategory.SubCategoryID','=','T_Product.SubCategoryID')
                             ->groupBy('T_SubCategory.SubCategoryID')
@@ -20,7 +25,8 @@ class SubController extends Controller{
                             ->get(['T_SubCategory.*',DB::raw('count(T_Product.ProductID) as total_products')]);
 
         return view('cms.subCategoryList',[
-            'subcategories' => $subs
+            'subcategories' => $subs,
+            'categories' => $cats
         ]);
 
     }
