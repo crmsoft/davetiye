@@ -103,6 +103,11 @@ Route::post('cms/insert/form', [
 	'uses'=>'cms\FormController@postInsertInTable'
 ]);
 
+Route::post('cms/update/form', [
+    'as' => 'cms-post-update-form',
+    'uses'=>'cms\FormController@postUpdateColumns'
+]);
+
 Route::post('cms/insert/form/stage/1', [
 	'as' => 'cms-post-insert-form-stage-1',
 	'uses'=>'cms\FormController@postInsertInTableStage1'

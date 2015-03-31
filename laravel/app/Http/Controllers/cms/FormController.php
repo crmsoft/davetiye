@@ -58,6 +58,33 @@ class FormController extends Controller{
         return Redirect::back();
     }
 
+    public function postUpdateColumns(){
+
+        if( Input::has('table_to_insert') && Input::has('row_id') ){
+            $map = new Map();
+
+            $model = $map->getModel( Input::get('table_to_insert') );
+
+            $obj = $model->find( Input::get('row_id') );
+
+            if($obj){
+                $fields = Input::except([ 'table_to_insert','row_id' ]);
+                foreach( $fields as $key=>$val ){
+                    if(isset($obj[$key])){
+                        $obj[$key] = $val;
+                    }
+                }
+                if($obj->save()){
+                    return json_encode("{status:'key-200'}");
+                }
+            }else{
+                return json_encode("{status:'key-404'}");
+            }
+        }else{
+            return json_encode("{status:'fail'}");
+        }
+    }
+
     public function postCheckInStage1(){
 
         if(!Input::has('product_id')){

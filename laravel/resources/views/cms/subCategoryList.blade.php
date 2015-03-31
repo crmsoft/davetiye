@@ -40,7 +40,7 @@
         <tbody>
         @foreach($subcategories as $key=>$value)
             <tr>
-                <td>
+                <td data-rel="subcategory-{!! $value->SubCategoryID !!}">
                     @if($value->Image)
                         {!! Html::image('img/thumbs/'.$value->Image,'Ürün', array('class'=>'sub-category-thumb','data-rel'=>'subcategory-'.$value->SubCategoryID,'height'=>'75','width'=>'75')) !!}
                     @else
@@ -53,7 +53,7 @@
                 <td>
                     {!! $value->OrderNo !!}
                 </td>
-                <td>
+                <td class="c-mr-on-span" data-rel="SubCategory-{!! $value->SubCategoryID !!}">
                     <input type="checkbox"
                            style="margin-right: 0 !important;"
                            class="make-switch" id="active_pop_up_form"
