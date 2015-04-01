@@ -95,6 +95,10 @@ Route::get('cms/sub-category/list',[
     'uses' => 'cms\SubController@getSubCategoryList'
 ]);
 
+Route::get('cms/property/list',[
+    'as' => 'cms-list-property',
+    'uses' => 'cms\SubController@getPropertyList'
+]);
 
 ///////////--------CMS-------POST----REQUESTS--GOES--HERE--------////////
 

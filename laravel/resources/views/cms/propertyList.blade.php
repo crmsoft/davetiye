@@ -1,7 +1,5 @@
 @extends('layouts.cms')
-<?php
-    $u = new App\Models\Utils\Utills();
-?>
+
 @section('content')
     @if(Session::has('flow_error'))
         <div class="row">
@@ -21,47 +19,20 @@
     </div>
     <table class="table">
         <thead>
-        <tr>
-            <th>
-                Görsel
-            </th>
-            <th>
-                Başlık
-            </th>
-            <th>
-                Sırası
-            </th>
-            <th>
-                Status
-            </th>
-            <th>
-                Oluşturma Tarihi
-            </th>
-            <th>
-                Ürün Sayısı
-            </th>
-            <th>
-                Güncelle
-            </th>
-        </tr>
+            <tr>
+                <th>Başlık</th>
+                <th>Sıra numarası</th>
+                <th>Durum</th>
+                <th>Oluşturma tarihi</th>
+                <th>Güncelle</th>
+            </tr>
         </thead>
         <tbody>
-        @foreach($subcategories as $key=>$value)
-            <tr data-origin="{!! $value->SubCategoryID !!}">
-                <td data-rel="subcategory-{!! $value->SubCategoryID !!}">
-                    @if($value->Image)
-                        {!! Html::image('img/thumbs/'.$value->Image,'Ürün', array('class'=>'sub-category-thumb','data-rel'=>'subcategory-'.$value->SubCategoryID,'height'=>'75','width'=>'75')) !!}
-                    @else
-                        {!! Html::image('http://www.placehold.it/75x75/EFEFEF/AAAAAA&text=EMPTY','Ürün ', array('class'=>'sub-category-thumb','data-rel'=>'subcategory-'.$value->SubCategoryID,'height'=>'75','width'=>'75')) !!}
-                    @endif
-                </td>
-                <td>
-                    {!! $value->Title !!}
-                </td>
-                <td>
-                    {!! $value->OrderNo !!}
-                </td>
-                <td class="c-mr-on-span" data-rel="SubCategory-{!! $value->SubCategoryID !!}">
+            @foreach($properties as $key=>$property)
+            <tr data-origin="{{ $property->PropertyID }}">
+                <td>{{ $property->Title  }}</td>
+                <td>{{ $property->OrderNo  }}</td>
+                <td class="c-mr-on-span" data-rel="Property-{!! $property->PropertyID !!}">
                     <input type="checkbox"
                            style="margin-right: 0 !important;"
                            class="make-switch" id="active_pop_up_form"
@@ -69,55 +40,19 @@
                            data-on-color="success"
                            data-off-color="danger"
                            data-on-text="Aktiv"
-                           {!! $value->Status ? 'checked':'' !!}
-                           data-off-text="Pasif">
+                           data-off-text="Pasif"
+                           {!! $property->Status ? 'checked':'' !!}>
                 </td>
+                <td>{{ $property->CreateDate  }}</td>
                 <td>
-                    {!! $value->CreateDate !!}
-                </td>
-                <td>
-                    <a href="{!! route('cms-list-product', $u->seoUrl($value->Title) ) !!}" style="text-decoration: none;">
-                        <!-- <i class="fa fa-plus"></i> -->
-                        <span class="badge badge-info" style="color: #000000;">
-                            {!! $value->total_products !!}
-                        </span>
-                    </a>
-                </td>
-                <td>
-                    <button type="submit" class="btn blue btn-round tooltips btn-refresh" data-placement="bottom" data-original-title="Güncelle">
+                    <button type="button" class="btn blue btn-round tooltips btn-refresh" data-placement="bottom" data-original-title="Güncelle">
                         <i class="fa fa-refresh"></i>
                     </button>
                 </td>
             </tr>
-        @endforeach
+            @endforeach
         </tbody>
     </table>
-    <!-- MODAL DROPZONE -->
-    <div id="fileChooser" class="modal fade bs-modal-sm" tabindex="-1" data-backdrop="static" data-keyboard="false">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                    <h4 class="modal-title">Yeni görsel seçin</h4>
-                </div>
-                <div class="modal-body">
-                    <form style="width: 270px; margin: 0 auto" action="{!! route('cms-post-update-form-picture') !!}" class="dropzone" id="my-awesome-dropzone" enctype="multipart/form-data">
-                        <div class="fallback">
-                            <input name="file" type="file" />
-                            <input type="hidden" value="{!! csrf_token() !!}"/>
-                        </div>
-                        <div class="dz-message" data-dz-message>
-                            <span><p>Yuklemek istediğiniz görseli buraya sürekleyin<br /> ve ya <br />tıklayarak seçin</span></p>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" data-dismiss="modal" class="btn default">Kapat</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- MODAL END DROZONE -->
     <!-- MODAL NEW -->
     <div class="modal fade" id="createOrUpdate" tabindex="-1" role="basic" aria-hidden="true">
         <div class="modal-dialog">
@@ -132,16 +67,6 @@
                             <label class="control-label col-md-3" for="">Başlık</label>
                             <div class="col-md-8">
                                 <input class="form-control" name="Title" type="text"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-3" for="">Kategori</label>
-                            <div class="col-md-8">
-                                <select class="form-control" name="CategoryID">
-                                    @foreach($categories as $category)
-                                        <option value="{!! $category->CategoryID !!}">{!! $category->Title !!}</option>
-                                    @endforeach
-                                </select>
                             </div>
                         </div>
                         <div class="form-group">
@@ -180,7 +105,7 @@
                             <button type="button" class="btn default" data-dismiss="modal">Kapat</button>
                             <button type="submit" class="btn blue">Ekle</button>
                         </div>
-                        <input type="hidden" name="table_to_insert" value="SubCategory"/>
+                        <input type="hidden" name="table_to_insert" value="Property"/>
                         {!! Form::token() !!}
                     </form>
                 </div>

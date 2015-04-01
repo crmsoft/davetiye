@@ -10,7 +10,6 @@ use App\Models\SubProperty;
 use Session;
 
 use App\Models\Product;
-use App\Models\Property;
 use App\Models\Quantity;
 use App\Models\SubCategory;
 
@@ -52,8 +51,12 @@ class BaseController extends Controller{
         }catch (Exception $e){
             dd($e);
         }
+
+        $sbCats = SubCategory::all()->toArray();
+
         return view('cms.productList', array(
-            'products' => $all_products
+            'products' => $all_products,
+            'subcategories' => $sbCats
         ));
     }
 

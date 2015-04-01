@@ -43,6 +43,7 @@
     <!-- POLYMER COMPONENTS -->
     <script type="text/javascript">
         var public_path = "{!! URL::to('/') !!}";
+        window.location.origin =  window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port: '');
     </script>
     <!-- END POLYMER -->
     <link rel="shortcut icon" href="favicon.ico" />
@@ -109,7 +110,7 @@
                     <!-- END RESPONSIVE QUICK SEARCH FORM -->
                 </li>
                 <li class="start {!! Route::currentRouteName() == 'cms-index' ? 'active':'' !!}">
-                    <a href="">
+                    <a href="{!! route('cms-index') !!}">
                         <i class="fa fa-shopping-cart"></i><span class="title">Dashboard
                         </span><span class="selected "></span>
                     </a>
@@ -136,6 +137,12 @@
                 <li class="start {!! Route::currentRouteName() == 'cms-list-sub-category' ? 'active':'' !!}">
                     <a href="{!! route('cms-list-sub-category') !!}">
                         <i class="fa fa-shopping-cart"></i><span class="title"> Alt Kategoriler
+                        </span><span class="selected "></span>
+                    </a>
+                </li>
+                <li class="start {!! Route::currentRouteName() == 'cms-list-property' ? 'active':'' !!}">
+                    <a href="{!! route('cms-list-property') !!}">
+                        <i class="fa fa-shopping-cart"></i><span class="title"> Özellikler
                         </span><span class="selected "></span>
                     </a>
                 </li>
@@ -191,6 +198,9 @@
         {!! Html::script('scripts/custom/single-file-upload.js') !!}
     @endif
 
+    @if(Route::currentRouteName() == 'cms-list-property')
+        {!! Html::script('scripts/custom/property-list.js') !!}
+    @endif
     {!! Html::script('scripts/custom/poor-ajax.js') !!}
     {!! Html::script('scripts/custom/active-passiv.js') !!}
 

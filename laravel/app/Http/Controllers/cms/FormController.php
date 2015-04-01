@@ -45,7 +45,11 @@ class FormController extends Controller{
 
             $model = $map->getModel( Input::get('table_to_insert') );
 
-            $model::create( Input::all() );
+            if(Input::has('ID')){
+                $model::find( Input::get('ID') )->update(Input::except(['table_to_insert','_token','ID']));
+            }else{
+                $model::create( Input::all() );
+            }
 
         }else{
             $_errors[] = 'Table To insert is not specified.';

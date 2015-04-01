@@ -8,6 +8,7 @@
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Property;
 use Illuminate\Support\Facades\DB;
 use App\Models\SubCategory;
 use Session;
@@ -27,6 +28,18 @@ class SubController extends Controller{
         return view('cms.subCategoryList',[
             'subcategories' => $subs,
             'categories' => $cats
+        ]);
+
+    }
+
+    public function getPropertyList(){
+
+        Session::put('title','Özellikler');
+
+        $props = Property::all();
+
+        return view('cms.propertyList',[
+            'properties'=>$props
         ]);
 
     }

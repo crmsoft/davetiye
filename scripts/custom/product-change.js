@@ -46,8 +46,6 @@ function round(value, decimals) {return Number(Math.round(value+'e'+decimals)+'e
            // appStop();
         }
 
-        window.location.origin =  window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port: '');
-
         httpRequest.open('POST', window.location.origin + '/products/detailed/post', true);
         httpRequest.onreadystatechange = handleResponse;
         httpRequest.setRequestHeader('X-CSRF-TOKEN', document.getElementsByName('csrf-token')[0].getAttribute('content'));

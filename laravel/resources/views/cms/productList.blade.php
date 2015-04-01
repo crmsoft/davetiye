@@ -6,7 +6,18 @@ use App\Models\Utils\Utills;
 $obj = new Utills();
 ?>
 @section('content')
-
+    <div class="row">
+        <div class="col-sm-5">
+            <select class="form-control" onchange="window.location = window.location.origin + '/cms/product/list/' + this.options[this.selectedIndex].value">
+                <option value="">Tümü</option>
+                @foreach($subcategories as $key=>$val)
+                    <?php $s_url = $obj->seoUrl( $val['Title'] ); ?>
+                    <option value="{!! $s_url !!}" {{ $s_url == Route::input('subcategory') ? 'selected':''  }} >{!! $val['Title'] !!}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="col-sm-6"></div>
+    </div>
     <table class="table">
         <thead></thead>
         <tfoot></tfoot>

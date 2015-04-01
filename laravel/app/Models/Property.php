@@ -7,7 +7,13 @@ class Property extends Model {
     public $timestamps = false;
 
     protected $table = 'T_Property';
-    protected $primaryKey = 'ID';
+    protected $primaryKey = 'PropertyID';
+    protected $fillable = [
+        'Title',
+        'OrderNo',
+        'Status'
+    ];
+
 
     public function subproperty(){
         return $this->hasMany('SubProperty','ID');

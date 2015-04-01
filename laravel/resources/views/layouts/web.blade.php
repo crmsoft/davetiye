@@ -7,7 +7,9 @@
 
     {!! Html::style('/plugins/bootstrap/css/bootstrap.min.css') !!}
     {!! Html::style('css/app.css') !!}
-
+    <script>
+        window.location.origin =  window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port: '');
+    </script>
 </head>
 <body>
 <div class="header">
