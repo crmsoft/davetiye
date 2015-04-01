@@ -31,7 +31,17 @@ $obj = new Utills();
                             TL</i>
                     </td>
                     <td>{!! $value->OrderNo !!}</td>
-                    <td>{!! $value->Status !!}</td>
+                    <td class="c-mr-on-span" data-rel="Product-{!! $value->ProductID !!}">
+                        <input type="checkbox"
+                               style="margin-right: 0 !important;"
+                               class="make-switch" id="active_pop_up_form"
+                               data-size="mini"
+                               data-on-color="success"
+                               data-off-color="danger"
+                               data-on-text="Aktiv"
+                               data-off-text="Pasif"
+                               {!! $value->Status ? 'checked':'' !!}>
+                    </td>
                     <td>{!! $value->CreateDate !!}</td>
                     <td>
                         <form action="{!! route('cms-post-insert-product-stage-1') !!}" method="post">

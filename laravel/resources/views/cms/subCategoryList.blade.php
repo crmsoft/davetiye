@@ -3,6 +3,14 @@
     $u = new App\Models\Utils\Utills();
 ?>
 @section('content')
+    @if(Session::has('flow_error'))
+        <div class="row">
+            <div class="alert alert-warning" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                {!!Session::get('flow_error') !!}
+            </div>
+        </div>
+    @endif
         <div class="row">
             <div class="col-sm-12">
                 <a class="btn green pull-right" data-toggle="modal" href="#basic">
@@ -123,13 +131,13 @@
                         <div class="form-group">
                             <label class="control-label col-md-3" for="">Başlık</label>
                             <div class="col-md-8">
-                                <input class="form-control" type="text"/>
+                                <input class="form-control" name="Title" type="text"/>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-3" for="">Kategori</label>
                             <div class="col-md-8">
-                                <select class="form-control" name="" id="">
+                                <select class="form-control" name="CategoryID">
                                     @foreach($categories as $category)
                                         <option value="{!! $category->CategoryID !!}">{!! $category->Title !!}</option>
                                     @endforeach
@@ -141,7 +149,7 @@
                             <div class="col-md-8">
                                 <div id="spinner1">
                                     <div class="input-group">
-                                        <input type="text" class="spinner-input form-control" maxlength="3">
+                                        <input type="text" name="OrderNo" class="spinner-input form-control" maxlength="3">
                                         <div class="spinner-buttons input-group-btn btn-group-vertical">
                                             <button type="button" class="btn spinner-up btn-xs blue">
                                                 <i class="fa fa-angle-up"></i>
@@ -159,6 +167,7 @@
                             <div class="col-md-8 c-mr-on-span">
                                 <input type="checkbox"
                                        style="margin-right: 0 !important;"
+                                       name="Status"
                                        class="make-switch" id="active_pop_up_form"
                                        data-size="mini"
                                        data-on-color="success"
@@ -168,9 +177,11 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn default" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn blue">Save changes</button>
+                            <button type="button" class="btn default" data-dismiss="modal">Kapat</button>
+                            <button type="submit" class="btn blue">Ekle</button>
                         </div>
+                        <input type="hidden" name="table_to_insert" value="SubCategory"/>
+                        {!! Form::token() !!}
                     </form>
                 </div>
             </div>

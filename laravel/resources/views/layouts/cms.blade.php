@@ -188,9 +188,11 @@
         {!! Html::style('bower_components/dropzone/dist/min/basic.min.css') !!}
         {!! Html::style('bower_components/dropzone/dist/min/dropzone.min.css') !!}
         {!! Html::script('bower_components/dropzone/dist/min/dropzone.min.js') !!}
-        {!! Html::script('scripts/custom/poor-ajax.js') !!}
         {!! Html::script('scripts/custom/single-file-upload.js') !!}
     @endif
+
+    {!! Html::script('scripts/custom/poor-ajax.js') !!}
+    {!! Html::script('scripts/custom/active-passiv.js') !!}
 
 
 </body>

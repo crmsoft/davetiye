@@ -6,6 +6,12 @@ class SubCategory extends Model {
 
     protected $table = 'T_SubCategory';
     protected $primaryKey = 'SubCategoryID';
+    protected $fillable = [
+        'Title',
+        'OrderNo',
+        'CategoryID',
+        'Status'
+    ];
 
     public function category(){
         return $this->belongsTo('Category', 'CategoryID');
