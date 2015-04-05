@@ -16,6 +16,16 @@
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all"
           rel="stylesheet" type="text/css" />
+    <script>
+        window.paceOptions = {
+            ajax: {
+                trackMethods: ['GET', 'POST']
+            }
+        };
+    </script>
+    {!! Html::style('plugins/pace/themes/pace-theme-minimal.css') !!}
+    {!! Html::script('plugins/pace/pace.min.js') !!}
+
     {!! Html::style('plugins/font-awesome/css/font-awesome.min.css') !!}
     {!! Html::style('plugins/bootstrap/css/bootstrap.min.css') !!}
     {!! Html::style('plugins/bootstrap-switch/css/bootstrap-switch.min.css') !!}
@@ -36,7 +46,6 @@
     {!! Html::style('css/pages/tasks.css', array( 'id'=>'style_color' )) !!}
     {!! Html::style('css/themes/default.css') !!}
     {!! Html::style('css/print.css', array('media'=>'print')) !!}
-    {!! Html::style('plugins/jcrop/css/jquery.Jcrop.min.css') !!}
     {!! Html::style('css/custom/custom.css') !!}
     {!! Html::style('bower_components/datatables/media/css/jquery.dataTables.min.css') !!}
     <!-- END THEME STYLES -->
@@ -72,7 +81,12 @@
                     {!! Html::image('img/avatar1_small.jpg') !!}
                     <span class="username">Hesabım </span><i class="fa fa-angle-down"></i></a>
                 <ul class="dropdown-menu">
-                    <li><a href="#View Home"><i class="fa fa-key"></i> Anasayfaya Git</a></li>
+                    <li><a href="{{ route('web-get-index') }}"><i class="fa fa-home"></i> Anasayfaya Git</a></li>
+                    <li>
+                        <a href="javascript:;" id="trigger_fullscreen">
+                            <i class="fa fa-arrows"></i> Tam Ekran
+                        </a>
+                    </li>
                     <li><a href="{!!  route('log-out-user') !!}"><i class="fa fa-key"></i> Çıkış </a></li>
                 </ul>
             </li>
@@ -119,6 +133,7 @@
                     <a href="javascript:;">
                         <i class="fa fa-shopping-cart"></i>
                         <span class="title">Ürünler</span>
+                        </span><span class="selected "></span>
                         <span class="arrow {!! (Route::currentRouteName() == 'cms-list-product' || Route::currentRouteName() == 'cms-add-product') ? 'open':'' !!}"></span>
                     </a>
                     <ul class="sub-menu">
@@ -165,7 +180,6 @@
 </div>
 
 {!! Html::script('plugins/jcrop/js/jquery.min.js') !!}
-{!! Html::script('plugins/jcrop/js/jquery.Jcrop.js') !!}
 {!! Html::script('plugins/jquery-ui/jquery-ui-1.10.3.custom.min.js') !!}
 {!! Html::script('plugins/bootstrap/js/bootstrap.min.js') !!}
 {!! Html::script('plugins/bootstrap-switch/js/bootstrap-switch.min.js') !!}
@@ -174,9 +188,7 @@
 {!! Html::script('plugins/jquery.cokie.min.js') !!}
 {!! Html::script('plugins/uniform/jquery.uniform.min.js') !!}
 {!! Html::script('plugins/fullcalendar/fullcalendar/fullcalendar.min.js') !!}
-{!! Html::script('plugins/jquery-easy-pie-chart/jquery.easy-pie-chart.js') !!}
 {!! Html::script('plugins/jquery.sparkline.min.js') !!}
-
 {!! Html::script('plugins/fuelux/js/spinner.min.js') !!}
 
 {!! HTML::script('scripts/core/app.js') !!}
@@ -191,17 +203,22 @@
     });
 </script>
 
-    @if(Route::currentRouteName() == 'cms-list-sub-category')
+    {!! Html::script('scripts/custom/poor-ajax.js') !!}
+    @if(Route::currentRouteName() == 'cms-list-sub-category' || Route::currentRouteName() == 'cms-list-product')
         {!! Html::style('bower_components/dropzone/dist/min/basic.min.css') !!}
         {!! Html::style('bower_components/dropzone/dist/min/dropzone.min.css') !!}
         {!! Html::script('bower_components/dropzone/dist/min/dropzone.min.js') !!}
         {!! Html::script('scripts/custom/single-file-upload.js') !!}
     @endif
 
+    @if(Route::currentRouteName() == 'cms-list-sub-category')
+        {!! Html::script('scripts/custom/sub-property-list.js') !!}
+    @endif
+
+
     @if(Route::currentRouteName() == 'cms-list-property')
         {!! Html::script('scripts/custom/property-list.js') !!}
     @endif
-    {!! Html::script('scripts/custom/poor-ajax.js') !!}
     {!! Html::script('scripts/custom/active-passiv.js') !!}
 
 

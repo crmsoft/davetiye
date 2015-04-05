@@ -6,6 +6,12 @@ class ProductGallery extends Model {
 
     protected $table = 'T_ProductGallery';
     protected $primaryKey = 'ProductGalleryID';
+    protected $fillable = [
+        'ImageName',
+        'ProductID',
+        'Status',
+        'OrderNo'
+    ];
 
     public function product()
     {

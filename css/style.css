@@ -738,7 +738,7 @@ Page sidebar
   display: block;
   width: 8px;
   height: 25px;
-  background-image: url("../img/sidebar-menu-arrow.png");
+  background-image: url("/img/sidebar-menu-arrow.png");
   float: right;
   position: absolute;
   right:0px;
@@ -746,7 +746,7 @@ Page sidebar
 }
 
 .page-sidebar-reversed .page-sidebar-menu > li.active > a .selected {
-  background-image: url("../img/sidebar-menu-arrow-reverse.png");
+  background-image: url("/img/sidebar-menu-arrow-reverse.png");
   right: auto;
   left:0;
 }
@@ -1371,33 +1371,33 @@ Portlets
 
 .portlet > .portlet-title > .tools > a.remove {
   margin-bottom: 2px;
-  background-image:url(../img/portlet-remove-icon.png);
+  background-image:url(/img/portlet-remove-icon.png);
   background-repeat: no-repeat;
   width: 11px;
 }
 
 .portlet > .portlet-title > .tools > a.config {
   margin-bottom: 2px;
-  background-image:url(../img/portlet-config-icon.png);
+  background-image:url(/img/portlet-config-icon.png);
   background-repeat: no-repeat;
   width: 12px;
 }
 
 .portlet > .portlet-title > .tools > a.reload {
   margin-bottom: 2px;
-  background-image:url(../img/portlet-reload-icon.png);
+  background-image:url(/img/portlet-reload-icon.png);
   width: 13px;
 }
 
 .portlet > .portlet-title > .tools > a.expand {
   margin-bottom: 2px;
-  background-image:url(../img/portlet-expand-icon.png);
+  background-image:url(/img/portlet-expand-icon.png);
   width: 14px;
 }
 
 .portlet > .portlet-title > .tools > a.collapse {
   margin-bottom: 2px;
-  background-image:url(../img/portlet-collapse-icon.png);
+  background-image:url(/img/portlet-collapse-icon.png);
   width: 14px;
 }
 
@@ -1589,27 +1589,27 @@ Box portlet
 
 .portlet.box > .portlet-title > .tools > a.remove, 
 .portlet.solid > .portlet-title > .tools > a.remove {
-  background-image:url(../img/portlet-remove-icon-white.png);
+  background-image:url(/img/portlet-remove-icon-white.png);
 }
 
 .portlet.box > .portlet-title > .tools > a.config,
 .portlet.solid > .portlet-title > .tools > a.config {
-  background-image:url(../img/portlet-config-icon-white.png);
+  background-image:url(/img/portlet-config-icon-white.png);
 }
 
 .portlet.box > .portlet-title > .tools > a.reload,
 .portlet.solid > .portlet-title > .tools > a.reload {
-  background-image:url(../img/portlet-reload-icon-white.png);
+  background-image:url(/img/portlet-reload-icon-white.png);
 }
 
 .portlet.box > .portlet-title > .tools > a.expand,
 .portlet.solid > .portlet-title > .tools > a.expand {
-  background-image:url(../img/portlet-expand-icon-white.png);
+  background-image:url(/img/portlet-expand-icon-white.png);
 }
 
 .portlet.box > .portlet-title > .tools > a.collapse,
 .portlet.solid > .portlet-title > .tools > a.collapse {
-  background-image:url(../img/portlet-collapse-icon-white.png);
+  background-image:url(/img/portlet-collapse-icon-white.png);
 }
 
 /* portlet buttons */
@@ -2178,7 +2178,7 @@ Zoom icon overlay on images
 }
 
 .zoom .zoom-icon {
-  background-image:url("../img/overlay-icon.png");
+  background-image:url("/img/overlay-icon.png");
   background-color: #222;
   background-repeat: no-repeat;
   background-position: 50%;
@@ -3215,7 +3215,7 @@ Theme Panel
   padding:20px;
   cursor:pointer;
   position:absolute;
-  background:#c9c9c9 url(../img/icon-color.png) center no-repeat;
+  background:#c9c9c9 url(/img/icon-color.png) center no-repeat;
 }
 
 .theme-panel > .toggler:hover {
@@ -3229,7 +3229,7 @@ Theme Panel
   padding:20px;
   cursor:pointer;
   position:absolute;
-  background: #3d3d3d url(../img/icon-color-close.png) center no-repeat !important;
+  background: #3d3d3d url(/img/icon-color-close.png) center no-repeat !important;
 }
 
 .theme-panel > .toggler-close:hover {
@@ -3496,7 +3496,7 @@ Horezantal Menu(new in v1.2)
     display: inline-block;
     padding: 12px 22px 12px 22px !important;
     cursor: pointer;
-    background: url(../img/hor-menu-search.png) no-repeat center;
+    background: url(/img/hor-menu-search.png) no-repeat center;
 }
 
 .header.navbar .hor-menu .hor-menu-search-form-toggler:hover {
@@ -4353,4 +4353,14 @@ UI Loading
 .page-loading span {
   line-height:20px;
   vertical-align: middle;
+}
+
+.remove-added-file-dz{
+    position: absolute;
+    top: -15px;
+    color: rgba(1, 107, 130, 1);
+    font-size: 15px;
+    z-index: 11;
+    left: -12px;
+    cursor: pointer;
 }

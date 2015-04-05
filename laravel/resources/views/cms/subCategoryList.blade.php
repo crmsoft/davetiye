@@ -48,7 +48,7 @@
         <tbody>
         @foreach($subcategories as $key=>$value)
             <tr data-origin="{!! $value->SubCategoryID !!}">
-                <td data-rel="subcategory-{!! $value->SubCategoryID !!}">
+                <td>
                     @if($value->Image)
                         {!! Html::image('img/thumbs/'.$value->Image,'Ürün', array('class'=>'sub-category-thumb','data-rel'=>'subcategory-'.$value->SubCategoryID,'height'=>'75','width'=>'75')) !!}
                     @else
@@ -101,7 +101,7 @@
                     <h4 class="modal-title">Yeni görsel seçin</h4>
                 </div>
                 <div class="modal-body">
-                    <form style="width: 270px; margin: 0 auto" action="{!! route('cms-post-update-form-picture') !!}" class="dropzone" id="my-awesome-dropzone" enctype="multipart/form-data">
+                    <form action="{!! route('cms-post-update-form-picture') !!}" class="dropzone" id="myDZ" enctype="multipart/form-data">
                         <div class="fallback">
                             <input name="file" type="file" />
                             <input type="hidden" value="{!! csrf_token() !!}"/>

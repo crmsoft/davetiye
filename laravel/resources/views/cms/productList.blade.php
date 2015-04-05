@@ -26,9 +26,9 @@ $obj = new Utills();
                 <tr>
                     <td>
                         @if($value->img)
-                            {!! Html::image('img/big/'.$value->img,'Ürün', array('title'=>'Bu Ürünun '.'5 görseli bulundu','height'=>'75','width'=>'75')) !!}
+                            {!! Html::image('img/thumbs/'.$value->img,'Ürün', array('data-rel'=>'gallery-'.$value->ProductID,'title'=>'Bu Ürünun '.'5 görseli bulundu','class'=>'sub-category-thumb gallery','height'=>'75','width'=>'75')) !!}
                         @else
-                            {!! Html::image('http://www.placehold.it/75x75/EFEFEF/AAAAAA&text=EMPTY','Ürün ', array('height'=>'75','width'=>'75')) !!}
+                            {!! Html::image('http://www.placehold.it/75x75/EFEFEF/AAAAAA&text=EMPTY','Ürün ', array('data-rel'=>'gallery-'.$value->ProductID,'class'=>'sub-category-thumb gallery','height'=>'75','width'=>'75')) !!}
                         @endif
                     </td>
                     <td><u>{!! $value->subcategory !!}</u></td>
@@ -67,4 +67,30 @@ $obj = new Utills();
             @endforeach
         </tbody>
     </table>
+    <!-- MODAL DROPZONE -->
+    <div id="fileChooser" class="modal fade bs-modal-sm" tabindex="-1" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4 class="modal-title">Yeni görsel seçin</h4>
+                </div>
+                <div class="modal-body">
+                    <form action="{!! route('cms-post-update-form-picture') !!}" class="dropzone" id="myDZ" enctype="multipart/form-data">
+                        <div class="fallback">
+                            <input name="file" type="file" />
+                            <input type="hidden" value="{!! csrf_token() !!}"/>
+                        </div>
+                        <div class="dz-message" data-dz-message>
+                            <span><p>Yuklemek istediğiniz görseli buraya sürekleyin<br /> ve ya <br />tıklayarak seçin</span></p>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn default">Kapat</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- MODAL END DROZONE -->
 @stop

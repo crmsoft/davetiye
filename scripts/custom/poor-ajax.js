@@ -31,11 +31,15 @@
                 }
             }
 
-            window.location.origin = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port : '');
+            if(!window.location.origin) {
+                window.location.origin = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port : '');
+            }
+
+            var token = document.getElementsByName('csrf-token')[0].getAttribute('content');
 
             httpRequest.open('POST', window.location.origin + this.url, true);
             httpRequest.onreadystatechange = serverResponse;
-            httpRequest.setRequestHeader('X-CSRF-TOKEN', document.getElementsByName('csrf-token')[0].getAttribute('content'));
+            httpRequest.setRequestHeader('X-CSRF-TOKEN', token);
             httpRequest.setRequestHeader('Content-Type', 'application/json');
             httpRequest.send( this.data );
         }

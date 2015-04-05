@@ -36,14 +36,20 @@ class BaseController extends Controller{
             if($sb){
                 $u = new Utills();
                 $all_products = Product::join('T_SubCategory', 'T_Product.SubCategoryID', '=', 'T_SubCategory.SubCategoryID')
-                    ->leftJoin('T_ProductGallery', 'T_Product.ProductID', '=', 'T_ProductGallery.ProductID')
+                    ->leftJoin('T_ProductGallery',  function($j){
+                        $j->on('T_Product.ProductID', '=', 'T_ProductGallery.ProductID');
+                        $j->on('T_ProductGallery.Status','=', DB::raw('1'));
+                    })
                     ->where('T_SubCategory.Title', $u->removeSlahes( $sb ) )
                     ->ODate()
                     ->groupBy('T_Product.ProductID')
                     ->get( array('T_Product.*', 'T_ProductGallery.imageName as img', 'T_SubCategory.Title as subcategory') );
             }else {
                 $all_products = Product::join('T_SubCategory', 'T_Product.SubCategoryID', '=', 'T_SubCategory.SubCategoryID')
-                    ->leftJoin('T_ProductGallery', 'T_Product.ProductID', '=', 'T_ProductGallery.ProductID')
+                    ->leftJoin('T_ProductGallery',  function($j){
+                        $j->on('T_Product.ProductID', '=', 'T_ProductGallery.ProductID');
+                        $j->on('T_ProductGallery.Status','=', DB::raw('1'));
+                    })
                     ->ODate()
                     ->groupBy('T_Product.ProductID')
                     ->get(array('T_Product.*', 'T_ProductGallery.imageName as img', 'T_SubCategory.Title as subcategory'));

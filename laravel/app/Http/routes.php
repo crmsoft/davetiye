@@ -136,3 +136,8 @@ Route::post('cms/update/form/picture',[
    'as' => 'cms-post-update-form-picture',
     'uses' => 'cms\FormController@postUpdatePicture'
 ]);
+
+Route::post('cms/post/request/table', [
+    'as' => 'cms-request-table-data',
+    'uses'=>'cms\FormController@postGetTableData'
+]);

@@ -11,6 +11,7 @@ namespace App\Http\Controllers\cms;
 
 use App\Models\Prices;
 use App\Models\Product;
+use App\Models\ProductGallery;
 use App\Models\Quantity;
 use App\Models\Utils\Map;
 use Illuminate\Database\QueryException;
@@ -69,7 +70,22 @@ class FormController extends Controller{
 
             $model = $map->getModel( Input::get('table_to_insert') );
 
-            $obj = $model->find( Input::get('row_id') );
+            $id = Input::get('row_id');
+
+            if(is_numeric($id)) {
+                $obj = $model->find($id);
+            }else{
+                $id = explode('-',$id);
+                $ln = count($id);
+                if($ln % 2 == 0){
+                    for( $i = 0; $i<$ln; $i++  ){
+                        $model = $model->where($id[$i],'=',$id[++$i]);
+                    }
+                    $obj = $model->first();
+                }else{
+                    return response()->json(['status'=>'401']);
+                }
+            }
 
             if($obj){
                 $fields = Input::except([ 'table_to_insert','row_id' ]);
@@ -79,13 +95,13 @@ class FormController extends Controller{
                     }
                 }
                 if($obj->save()){
-                    return json_encode("{status:'key-200'}");
+                    return response()->json(['status'=>'200']);
                 }
             }else{
-                return json_encode("{status:'key-404'}");
+                return response()->json(['status'=>'404']);
             }
         }else{
-            return json_encode("{status:'fail'}");
+            return response()->json(['status'=>'501']);
         }
     }
 
@@ -130,7 +146,6 @@ class FormController extends Controller{
 
         Session::put('PricesByQuantities',Input::get('quantitiesPrices'));
 
-        Session::put('UserInsertQuantity',Quantity::whereIn('QuantityID',Input::get('qunatitiesIds'))->get()->toArray());
 
         Session::put('Quantity',Input::get('quantity_id'));
 
@@ -230,29 +245,47 @@ class FormController extends Controller{
 
     public function postUpdatePicture(){
 
-        $response = 'fail';
+        $response = 'fail';$fileName='';
         if( Input::hasFile('file') && Input::has('relation') ){
             $file = Input::file('file');
             $arr = explode('-',Input::get('relation'));
             if(isset($arr[0]) && isset($arr[1])){
+
+                $image = Image::make($file->getRealPath())->fit(239, 239);
+                $fileName = time().'.'.$file->getClientOriginalExtension();
+                $image->save('/var/www/html/taksitle.com/img/thumbs/'.$fileName);
+
+                $image = Image::make($file->getRealPath())->fit(555, 555);
+                $image->save('/var/www/html/taksitle.com/img/big/'.$fileName);
+
                 if( $arr[0] == 'subcategory' ){
                     $data = SubCategory::find($arr[1]);
-
-                    $image = Image::make($file->getRealPath())->fit(239, 239);
-                    $fileName = time().'.'.$file->getClientOriginalExtension();
                     $data->Image = $fileName;
-                    $image->save('/var/www/html/taksitle.com/img/thumbs/'.$fileName);
-
-                    $image = Image::make($file->getRealPath())->fit(555, 555);
-                    $image->save('/var/www/html/taksitle.com/img/big/'.$fileName);
-
                     if( $data->save() ){
-                        $response = 'ok';
+                        $response = $fileName;
+                    }
+                }else if( $arr[0] == 'gallery' ){
+                    if( ProductGallery::create([ 'ProductID'=>$arr[1], 'ImageName'=>$fileName, 'Status'=>1, 'OrderNo'=>1 ]) ){
+                        $response = $fileName;
                     }
                 }
             }
         }
 
         return $response;
+    }
+
+    public function postGetTableData(){
+
+        if (Input::has('request_table') && Input::has('value') && Input::has('column')) {
+            $table = Input::get('request_table');
+            $id = Input::get('value');
+            $column = Input::get('column');
+
+            return response()->json(DB::table($table)->where($column,'=',$id)->where('Status','=','1')->get());
+        } else {
+            return response('request_table, column and value, are required fields, was not posted as input'.var_dump(Input::all()), 501);
+        }
+
     }
 }
