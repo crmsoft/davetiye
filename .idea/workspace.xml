@@ -2,47 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="02c0713f-ed6b-4190-9432-8a6a3f040c90" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/img/hor-menu-search-close-white.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/img/hor-menu-search-close.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/img/hor-menu-search.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/img/hor-menu-search.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/img/overlay-icon.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/img/portlet-collapse-icon-white.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/img/portlet-collapse-icon.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/img/portlet-config-icon-white.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/img/portlet-config-icon.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/img/portlet-expand-icon-white.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/img/portlet-expand-icon.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/img/portlet-reload-icon-white.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/img/portlet-reload-icon.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/img/portlet-remove-icon-white.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/img/portlet-remove-icon.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/img/search-icon-blue.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/img/search-icon-brown.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/img/search-icon-light.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/img/search-icon-purple.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/img/search-icon-red.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/img/search-icon.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/img/sidebar-menu-arrow-green-reverse.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/img/sidebar-menu-arrow-green.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/img/sidebar-menu-arrow-reverse.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/img/sidebar-menu-arrow-right.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/img/sidebar-menu-arrow.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/custom/sub-property-list.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/cms/BaseController.php" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/cms/BaseController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/cms/FormController.php" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/cms/FormController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/laravel/app/Models/ProductGallery.php" afterPath="$PROJECT_DIR$/laravel/app/Models/ProductGallery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/custom/active-passiv.js" afterPath="$PROJECT_DIR$/scripts/custom/active-passiv.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/laravel/resources/views/layouts/cms.blade.php" afterPath="$PROJECT_DIR$/laravel/resources/views/layouts/cms.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/css/themes/default.css" afterPath="$PROJECT_DIR$/css/themes/default.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/dropzone/dist/min/dropzone.min.css" afterPath="$PROJECT_DIR$/bower_components/dropzone/dist/min/dropzone.min.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/plugins/pace/pace.min.js" afterPath="$PROJECT_DIR$/plugins/pace/pace.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/custom/poor-ajax.js" afterPath="$PROJECT_DIR$/scripts/custom/poor-ajax.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/laravel/resources/views/cms/productList.blade.php" afterPath="$PROJECT_DIR$/laravel/resources/views/cms/productList.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/laravel/app/Http/routes.php" afterPath="$PROJECT_DIR$/laravel/app/Http/routes.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/custom/single-file-upload.js" afterPath="$PROJECT_DIR$/scripts/custom/single-file-upload.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/css/style.css" afterPath="$PROJECT_DIR$/css/style.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/laravel/resources/views/cms/subCategoryList.blade.php" afterPath="$PROJECT_DIR$/laravel/resources/views/cms/subCategoryList.blade.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="taksitle.com.iws" />
@@ -123,7 +82,7 @@
       <file leaf-file-name="FormController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/laravel/app/Http/Controllers/cms/FormController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.34448162" vertical-offset="3619" max-vertical-offset="4440">
+            <state vertical-scroll-proportion="0.79844964" vertical-offset="3619" max-vertical-offset="4440">
               <caret line="255" column="44" selection-start-line="255" selection-start-column="44" selection-end-line="255" selection-end-column="56" />
               <folding>
                 <element signature="e#6#87#0#PHP" expanded="true" />
@@ -562,11 +521,11 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="18" width="1366" height="750" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.22541603" sideWeight="0.36933535" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32928678" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.51437217" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.51437217" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32980332" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.21374622" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -990,7 +949,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/laravel/app/Http/Controllers/cms/FormController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.34448162" vertical-offset="3619" max-vertical-offset="4440">
+        <state vertical-scroll-proportion="0.79844964" vertical-offset="3619" max-vertical-offset="4440">
           <caret line="255" column="44" selection-start-line="255" selection-start-column="44" selection-end-line="255" selection-end-column="56" />
           <folding>
             <element signature="e#6#87#0#PHP" expanded="true" />
