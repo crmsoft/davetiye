@@ -10,7 +10,11 @@
             <ul>
                 @foreach( $categories as $key=>$val )
                     <?php $url = $u->seoUrl($val->Title); ?>
-                    <a href="{!! URL::to( 'urunler', [ $url ] ) !!}"><li class="{!! ($url == Session::get('subcategory')) ? 'act':'' !!}">{!! $val->Title !!}</li></a>
+                    <a href="{!! URL::to( 'urunler', [ $url ] ) !!}">
+                        <li class="{!! ($url == Session::get('subcategory')) ? 'act':'' !!}">
+                            {!! $val->Title !!}
+                        </li>
+                    </a>
                 @endforeach
             </ul>
         </div>
@@ -21,13 +25,14 @@
         </div>
     @else
         @foreach( $products as $key => $value )
+            <?php $price = $u->getMinProductPriceByID($value->ProductID); if(!$price){ continue; } ?>
             <a href="{!! URL::to( 'urunler', [ Route::input('subcategory'), $u->seoUrl($value->ProductID) ] ) !!}">
                 <div class="pro">
                     <div class="btn-pro"></div>
-                    {!! Html::image('img/big/'.$value->ImageName,'',array('width'=>"239", 'height'=>"239")) !!}
+                    {!! Html::image('img/thumbs/'.$value->ImageName,'',array('width'=>"239", 'height'=>"239")) !!}
                     <div class="pro-info">
                         <span class="fl" style="font-size: 12px;padding-top: 2px;">{!! $value->Title !!}</span>
-                        <span class="fr">{!! $u->getMinProductPriceByID($value->ProductID) !!} TL</span>
+                        <span class="fr">{!! $price !!} TL</span>
                     </div>
                 </div>
             </a>

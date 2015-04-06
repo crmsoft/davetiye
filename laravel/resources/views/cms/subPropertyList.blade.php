@@ -1,45 +1,52 @@
 @extends('layouts.cms')
+
 <?php
 use App\Models\Utils\Utills;
-        $u = new Utills();
+$obj = new Utills();
 ?>
 @section('content')
+
     @if(Session::has('flow_error'))
         <div class="row">
             <div class="alert alert-warning" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                {!!Session::get('flow_error') !!}
+                {!!Session::flash('flow_error') !!}
             </div>
         </div>
     @endif
-    <div class="row">
-        <div class="col-sm-12">
-            <a class="btn green pull-right" data-toggle="modal" href="#createOrUpdate">
-                Yeni Ekle |
-                <i class="fa fa-plus"></i>
-            </a>
-        </div>
+    <div class="col-sm-6" style="margin-left: -15px;">
+        <select class="form-control" onchange="window.location = window.location.origin + '/cms/sub-property/list/' + this.options[this.selectedIndex].value">
+            <option value="">Tümü</option>
+            @foreach($properties as $key=>$val)
+                <?php $s_url = $obj->seoUrl( $val['Title'] ); ?>
+                <option value="{!! $s_url !!}" {{ $s_url == Route::input('property') ? 'selected':''  }} >{!! $val->Title !!}</option>
+            @endforeach
+        </select>
+    </div>
+    <div class="col-sm-6">
+        <a class="btn green pull-right" data-toggle="modal" href="#createOrUpdate">
+            Yeni Ekle |
+            <i class="fa fa-plus"></i>
+        </a>
     </div>
     <table class="table">
         <thead>
-            <tr>
-                <th>Başlık</th>
-                <th>Sıra numarası</th>
-                <th>Durum</th>
-                <th>Oluşturma tarihi</th>
-                <th>Güncelle</th>
-            </tr>
+        <tr>
+            <th>Başlık</th>
+            <th>Özellik</th>
+            <th>Sıra numarası</th>
+            <th>Durum</th>
+            <th>Oluşturma tarihi</th>
+            <th>Güncelle</th>
+        </tr>
         </thead>
         <tbody>
-            @foreach($properties as $key=>$property)
-            <tr data-origin="{{ $property->PropertyID }}">
-                <td>
-                    <a href="{{ route('cms-list-sub-property',[ $u->seoUrl($property->Title) ])  }}">
-                        {{ $property->Title  }}
-                    </a>
-                </td>
-                <td>{{ $property->OrderNo  }}</td>
-                <td class="c-mr-on-span" data-rel="Property-{!! $property->PropertyID !!}">
+        @foreach($subproperties as $key=>$subproperty)
+            <tr data-origin="{{ $subproperty->SubPropertyID }}">
+                <td>{{ $subproperty->Title  }}</td>
+                <td>{{ $subproperty->property  }}</td>
+                <td>{{ $subproperty->OrderNo  }}</td>
+                <td class="c-mr-on-span" data-rel="SubProperty-{!! $subproperty->SubPropertyID !!}">
                     <input type="checkbox"
                            style="margin-right: 0 !important;"
                            class="make-switch" id="active_pop_up_form"
@@ -48,16 +55,16 @@ use App\Models\Utils\Utills;
                            data-off-color="danger"
                            data-on-text="Aktiv"
                            data-off-text="Pasif"
-                           {!! $property->Status ? 'checked':'' !!}>
+                           {!! $subproperty->Status ? 'checked':'' !!}>
                 </td>
-                <td>{{ $property->CreateDate  }}</td>
+                <td>{{ $subproperty->created_at  }}</td>
                 <td>
                     <button type="button" class="btn blue btn-round tooltips btn-refresh" data-placement="bottom" data-original-title="Güncelle">
                         <i class="fa fa-refresh"></i>
                     </button>
                 </td>
             </tr>
-            @endforeach
+        @endforeach
         </tbody>
     </table>
     <!-- MODAL NEW -->
@@ -73,7 +80,17 @@ use App\Models\Utils\Utills;
                         <div class="form-group">
                             <label class="control-label col-md-3" for="">Başlık</label>
                             <div class="col-md-8">
-                                <input class="form-control" name="Title" type="text"/>
+                                <input class="form-control" name="Title" type="text" required/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="">Özellik</label>
+                            <div class="col-md-8">
+                                <select name="PropertyID" id="" class="form-control">
+                                    @foreach($properties as $propery)
+                                        <option value="{{ $propery->PropertyID }}">{{ $propery->Title }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                         <div class="form-group">
@@ -112,7 +129,7 @@ use App\Models\Utils\Utills;
                             <button type="button" class="btn default" data-dismiss="modal">Kapat</button>
                             <button type="submit" class="btn blue">Ekle</button>
                         </div>
-                        <input type="hidden" name="table_to_insert" value="Property"/>
+                        <input type="hidden" name="table_to_insert" value="SubProperty"/>
                         {!! Form::token() !!}
                     </form>
                 </div>

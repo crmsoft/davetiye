@@ -1,4 +1,5 @@
 $(document).ready(function(){
+    $('#spinner1').spinner();
 
     $('#createOrUpdate').on('hidden.bs.modal',function(){
         var $form = $('#createOrUpdate').find('form');
@@ -17,9 +18,9 @@ $(document).ready(function(){
 
     $('.btn-refresh').click(function(){
         var row = $(this).closest('tr');
-        var title = row.children('td:eq(0)').text().trim();
-        var order = row.children('td:eq(1)').text().trim();
-        var status = row.children('td:eq(2)').find('input:checkbox').attr('checked');
+        var title = row.children('td:eq(1)').text().trim();
+        var order = row.children('td:eq(2)').text().trim();
+        var status = row.children('td:eq(3)').find('input:checkbox').attr('checked');
         var $modal = $('#createOrUpdate');
         var $form = $modal.find('form');
         $form.append( '<input name="ID" type="hidden" value="'+row.data('origin')+'" />' );
@@ -28,5 +29,4 @@ $(document).ready(function(){
         $form.find('input[name="Status"]').bootstrapSwitch('state',status);
         $modal.modal();
     });
-
 });

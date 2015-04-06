@@ -72,7 +72,10 @@ class BaseController extends Controller{
         Session::put('addForm', 'Yeni adet ekleyin');
         Session::put('title','Yeni ürün - step 2');
 
-        $props = SubProperty::leftJoin('T_Property','T_SubProperty.PropertyID','=','T_Property.PropertyID')
+        $props = SubProperty::Join('T_Property',function($j){
+            $j->on('T_SubProperty.PropertyID','=','T_Property.PropertyID');
+            $j->on('T_SubProperty.Status','=',DB::raw('1'));
+        })->where('T_Property.Status','=','1')
                     ->orderBy('T_Property.PropertyID','desc')
             ->get(['T_Property.PropertyID', 'T_Property.Title as prop', 'T_SubProperty.SubPropertyID', 'T_SubProperty.Title as subprop'])
         ->toArray();
@@ -81,12 +84,19 @@ class BaseController extends Controller{
                 ->get()
             ->toArray();
 
+        $q = Quantity::find(Session::get('Quantity'))->toArray();
+
+       // dd($exist_props,$props,Session::get('Quantity'));
        /* foreach($props as $key=>$val){
             $vart = var_dump(array_where($exist_props, function($C,$v) use ($val){ return ($v['QuantityID'] == 11) && $val['SubPropertyID'] == $v['SubPropertyID']; }));
             echo $vart;
         }die();*/
 
-        return view('cms.addProduct.step2',['properties'=>$props,'exist_props'=>$exist_props]);
+        return view('cms.addProduct.step2',[
+            'properties'=>$props,
+            'exist_props'=>$exist_props,
+            'quantity' => $q
+        ]);
     }
 
     public function getAddProductStep1(){

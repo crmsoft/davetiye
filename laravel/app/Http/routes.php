@@ -100,6 +100,11 @@ Route::get('cms/property/list',[
     'uses' => 'cms\SubController@getPropertyList'
 ]);
 
+Route::get('cms/sub-property/list/{property?}',[
+    'as' => 'cms-list-sub-property',
+    'uses' => 'cms\SubController@getSubPropertyList'
+]);
+
 ///////////--------CMS-------POST----REQUESTS--GOES--HERE--------////////
 
 Route::post('cms/insert/form', [

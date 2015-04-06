@@ -11,7 +11,7 @@ use App\Models\SubCategory;
 use App\Models\Utils\Utills;
 use App\Models\Product;
 use Symfony\Component\HttpFoundation\Response;
-use Session;
+use Session;use Illuminate\Support\Facades\DB;
 
 
 class DefaultController extends Controller{
@@ -44,16 +44,17 @@ class DefaultController extends Controller{
             Session::flash('warning','<h3 class="mt_35 mr_35">Subcategory bulunamadı!!!</h3>');
             $prod=[];
         }else {
-            $prod = Product::join( 'T_ProductGallery','T_ProductGallery.ProductID', '=', 'T_Product.ProductID' )
+            $prod = Product::leftJoin( 'T_ProductGallery', function($j){
+                $j->on('T_ProductGallery.ProductID', '=', 'T_Product.ProductID');
+                $j->on('T_ProductGallery.Status', '=', DB::raw('1'));
+            })
                 ->where('SubCategoryID', '=', $sbc[0]->SubCategoryID)
-                ->ODate()->Active()->groupBy('T_ProductGallery.ProductID')->get();
+                ->ODate()->Active()->groupBy('T_Product.ProductID')->get(['T_Product.*','T_ProductGallery.ImageName']);
 
             if(!$prod->count()){
                 Session::flash('warning','<h3 class="mt_35 mr_35">Ürün Bulunamadı!!!</h3>');
             }
-        }
-
-        $cats = SubCategory::Ordered()->Active()->get();
+        }$cats = SubCategory::Ordered()->Active()->get();
 
         return view('web.subcategory-products')->with( [ 'categories'=>$cats, 'products'=>$prod ] );
     }

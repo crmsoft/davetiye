@@ -15,13 +15,12 @@
         </div>
     @endif
     <script src="/scripts/custom/productAdd.js"></script>
-    <?php $tmp_q = Session::get('UserInsertQuantity'); $tmp_q = $tmp_q ? $tmp_q : []; ?>
     <div class="row">
         <div class="col-sm-6">
             <h4>
                 <a href="{!! route('cms-add-product') !!}">{!! Session::get('Product')->Title !!}</a> /
                 <a href="{!! route('cms-add-product-step1') !!}">
-                    @foreach($tmp_q as $obj)
+                    @foreach($quantity as $obj)
                     [{!! $obj['Title'] !!}]
                     @endforeach
                 </a>
@@ -43,7 +42,7 @@
     <div class="row">
         <div class="col-sm-8">
             <form action="{!! route('cms-post-insert-product-stage-3') !!}" class="form-horizontal bordered-row" method="post">
-                @foreach($tmp_q as $obj)
+                @foreach($quantity as $obj)
                     <span class="btn btn-success pull-right">[ {!! $obj['Title'] !!} ]</span>
                 <div class="checks-container">
 

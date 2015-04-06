@@ -161,6 +161,12 @@
                         </span><span class="selected "></span>
                     </a>
                 </li>
+                <li class="start {!! Route::currentRouteName() == 'cms-list-sub-property' ? 'active':'' !!}">
+                    <a href="{!! route('cms-list-sub-property') !!}">
+                        <i class="fa fa-shopping-cart"></i><span class="title">Alt Özellikler
+                        </span><span class="selected "></span>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
@@ -204,23 +210,24 @@
 </script>
 
     {!! Html::script('scripts/custom/poor-ajax.js') !!}
+
     @if(Route::currentRouteName() == 'cms-list-sub-category' || Route::currentRouteName() == 'cms-list-product')
         {!! Html::style('bower_components/dropzone/dist/min/basic.min.css') !!}
         {!! Html::style('bower_components/dropzone/dist/min/dropzone.min.css') !!}
         {!! Html::script('bower_components/dropzone/dist/min/dropzone.min.js') !!}
         {!! Html::script('scripts/custom/single-file-upload.js') !!}
     @endif
-
     @if(Route::currentRouteName() == 'cms-list-sub-category')
-        {!! Html::script('scripts/custom/sub-property-list.js') !!}
+        {!! Html::script('scripts/custom/sub-category-list.js') !!}
     @endif
-
-
     @if(Route::currentRouteName() == 'cms-list-property')
         {!! Html::script('scripts/custom/property-list.js') !!}
     @endif
-    {!! Html::script('scripts/custom/active-passiv.js') !!}
+    @if(Route::currentRouteName() == 'cms-list-sub-property')
+        {!! Html::script('scripts/custom/sub-property-list.js') !!}
+    @endif
 
+    {!! Html::script('scripts/custom/active-passiv.js') !!}
 
 </body>
 </html>

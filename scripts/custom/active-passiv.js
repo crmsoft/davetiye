@@ -4,7 +4,7 @@ $(document).ready(function(){
         var target = e.target.parentNode.parentNode.parentNode.getAttribute('data-rel');
         if(httpReq && target ){
             httpReq.setUrl('/cms/update/form');
-            httpReq.setCB(function( response ){ console.log(response); });
+            httpReq.setCB(function( response ){ console.log(response.status); });
             httpReq.setData({
                 table_to_insert:target.split('-')[0],
                 row_id:target.split('-')[1],

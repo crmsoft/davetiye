@@ -1,6 +1,8 @@
 <?php namespace App\Models\Utils;
 
 use Illuminate\Support\Facades\DB;
+use PhpSpec\Exception\Exception;
+use Psy\Exception\ErrorException;
 
 class Utills {
 
@@ -130,9 +132,14 @@ class Utills {
     }
 
     function setMinQuantity( $data ){
-        $r = min($data);
 
-        for( $i=0;$i<count($data); $i++ ){
+        $ln = count($data);
+
+        if($ln <= 0){
+            throw new Exception('');
+        }$r = min($data);
+
+        for( $i=0;$i<$ln; $i++ ){
             if( $r->adet == $data[$i]->adet ){
                 $this->start_index = $i;
                 break;

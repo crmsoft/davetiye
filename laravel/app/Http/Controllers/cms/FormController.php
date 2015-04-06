@@ -80,8 +80,7 @@ class FormController extends Controller{
                 if($ln % 2 == 0){
                     for( $i = 0; $i<$ln; $i++  ){
                         $model = $model->where($id[$i],'=',$id[++$i]);
-                    }
-                    $obj = $model->first();
+                    } $obj = $model->first();
                 }else{
                     return response()->json(['status'=>'401']);
                 }
@@ -89,13 +88,14 @@ class FormController extends Controller{
 
             if($obj){
                 $fields = Input::except([ 'table_to_insert','row_id' ]);
+
                 foreach( $fields as $key=>$val ){
                     if(isset($obj[$key])){
                         $obj[$key] = $val;
                     }
                 }
                 if($obj->save()){
-                    return response()->json(['status'=>'200']);
+                    return response()->json($obj->toArray());//['status'=>'200']);
                 }
             }else{
                 return response()->json(['status'=>'404']);
@@ -147,7 +147,7 @@ class FormController extends Controller{
         Session::put('PricesByQuantities',Input::get('quantitiesPrices'));
 
 
-        Session::put('Quantity',Input::get('quantity_id'));
+        Session::put('Quantity',Input::get('qunatitiesIds'));
 
         return redirect('cms/product/add/step/2');
     }

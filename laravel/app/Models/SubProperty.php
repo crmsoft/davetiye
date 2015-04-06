@@ -6,6 +6,15 @@ class SubProperty extends Model {
 
     protected $table = 'T_SubProperty';
     protected $primaryKey = 'SubPropertyID';
+    protected $fillable = [
+        'Status',
+        'OrderNo',
+        'PropertyID',
+        'Title',
+        'updated_at',
+        'created_at',
+        'EkPoperty'
+    ];
 
     public function property(){
         return $this->belongsTo( 'Property','PropertyID' );
