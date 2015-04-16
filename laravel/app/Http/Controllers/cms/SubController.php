@@ -38,7 +38,9 @@ class SubController extends Controller{
 
         Session::put('title','Özellikler');
 
-        $props = Property::Ordered()->get();
+        $props = Property::leftJoin('T_SubProperty','T_SubProperty.PropertyID','=','T_Property.PropertyID')
+            ->Ordered()->groupBy('T_Property.PropertyID')
+            ->get(['T_Property.*', DB::raw('count(T_SubProperty.SubPropertyID) as cnt')]);
 
         return view('cms.propertyList',[
             'properties'=>$props

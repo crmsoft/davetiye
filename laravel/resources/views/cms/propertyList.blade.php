@@ -23,23 +23,24 @@ use App\Models\Utils\Utills;
     <table class="table">
         <thead>
             <tr>
-                <th>Başlık</th>
-                <th>Sıra numarası</th>
-                <th>Durum</th>
-                <th>Oluşturma tarihi</th>
-                <th>Güncelle</th>
+                <th class="text-center">Başlık</th>
+                <th class="text-center">Sıra numarası</th>
+                <th class="text-center">Durum</th>
+                <th class="text-center">Alt özellik sayısı</th>
+                <th class="text-center">Oluşturma tarihi</th>
+                <th class="text-center">Güncelle</th>
             </tr>
         </thead>
         <tbody>
             @foreach($properties as $key=>$property)
             <tr data-origin="{{ $property->PropertyID }}">
-                <td>
+                <td class="text-center">
                     <a href="{{ route('cms-list-sub-property',[ $u->seoUrl($property->Title) ])  }}">
                         {{ $property->Title  }}
                     </a>
                 </td>
-                <td>{{ $property->OrderNo  }}</td>
-                <td class="c-mr-on-span" data-rel="Property-{!! $property->PropertyID !!}">
+                <td class="text-center">{{ $property->OrderNo  }}</td>
+                <td class="c-mr-on-span text-center" data-rel="Property-{!! $property->PropertyID !!}">
                     <input type="checkbox"
                            style="margin-right: 0 !important;"
                            class="make-switch" id="active_pop_up_form"
@@ -50,8 +51,16 @@ use App\Models\Utils\Utills;
                            data-off-text="Pasif"
                            {!! $property->Status ? 'checked':'' !!}>
                 </td>
-                <td>{{ $property->CreateDate  }}</td>
-                <td>
+                <td class="text-center">
+                    <a href="{!! route('cms-list-sub-property', $u->seoUrl($property->Title) ) !!}" style="text-decoration: none;">
+                        <!-- <i class="fa fa-plus"></i> -->
+                        <span class="badge badge-info" style="color: #000000;">
+                            {{ $property->cnt  }}
+                        </span>
+                    </a>
+                </td>
+                <td class="text-center">{{ $property->CreateDate  }}</td>
+                <td class="text-center">
                     <button type="button" class="btn blue btn-round tooltips btn-refresh" data-placement="bottom" data-original-title="Güncelle">
                         <i class="fa fa-refresh"></i>
                     </button>
