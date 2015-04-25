@@ -10,6 +10,7 @@
  */
 
 use Carbon\Carbon;
+use Carbon\CarbonInterval;
 
 class DiffTest extends TestFixture
 {
@@ -103,8 +104,7 @@ class DiffTest extends TestFixture
     public function testDiffInDaysFilteredPositiveWithMutated()
     {
         $dt = Carbon::createFromDate(2000, 1, 1);
-        $this->assertSame(5, $dt->diffInDaysFiltered(function (Carbon $date)
-        {
+        $this->assertSame(5, $dt->diffInDaysFiltered(function (Carbon $date) {
             return $date->dayOfWeek === 1;
         }, $dt->copy()->endOfMonth()));
     }
@@ -114,8 +114,7 @@ class DiffTest extends TestFixture
         $dt1 = Carbon::createFromDate(2000, 1, 1);
         $dt2 = Carbon::createFromDate(2000, 1, 31);
 
-        $this->assertSame(5, $dt1->diffInDaysFiltered(function (Carbon $date)
-        {
+        $this->assertSame(5, $dt1->diffInDaysFiltered(function (Carbon $date) {
             return $date->dayOfWeek === Carbon::SUNDAY;
         }, $dt2));
     }
@@ -123,8 +122,7 @@ class DiffTest extends TestFixture
     public function testDiffInDaysFilteredNegativeNoSignWithMutated()
     {
         $dt = Carbon::createFromDate(2000, 1, 31);
-        $this->assertSame(5, $dt->diffInDaysFiltered(function (Carbon $date)
-        {
+        $this->assertSame(5, $dt->diffInDaysFiltered(function (Carbon $date) {
             return $date->dayOfWeek === Carbon::SUNDAY;
         }, $dt->copy()->startOfMonth()));
     }
@@ -134,8 +132,7 @@ class DiffTest extends TestFixture
         $dt1 = Carbon::createFromDate(2000, 1, 31);
         $dt2 = Carbon::createFromDate(2000, 1, 1);
 
-        $this->assertSame(5, $dt1->diffInDaysFiltered(function (Carbon $date)
-        {
+        $this->assertSame(5, $dt1->diffInDaysFiltered(function (Carbon $date) {
             return $date->dayOfWeek === Carbon::SUNDAY;
         }, $dt2));
     }
@@ -143,8 +140,7 @@ class DiffTest extends TestFixture
     public function testDiffInDaysFilteredNegativeWithSignWithMutated()
     {
         $dt = Carbon::createFromDate(2000, 1, 31);
-        $this->assertSame(-5, $dt->diffInDaysFiltered(function (Carbon $date)
-        {
+        $this->assertSame(-5, $dt->diffInDaysFiltered(function (Carbon $date) {
             return $date->dayOfWeek === 1;
         }, $dt->copy()->startOfMonth(), false));
     }
@@ -154,9 +150,96 @@ class DiffTest extends TestFixture
         $dt1 = Carbon::createFromDate(2000, 1, 31);
         $dt2 = Carbon::createFromDate(2000, 1, 1);
 
-        $this->assertSame(-5, $dt1->diffInDaysFiltered(function (Carbon $date)
-        {
+        $this->assertSame(-5, $dt1->diffInDaysFiltered(function (Carbon $date) {
             return $date->dayOfWeek === Carbon::SUNDAY;
+        }, $dt2, false));
+    }
+
+    public function testDiffInHoursFiltered()
+    {
+        $dt1 = Carbon::createFromDate(2000, 1, 31)->endOfDay();
+        $dt2 = Carbon::createFromDate(2000, 1, 1)->startOfDay();
+
+        $this->assertSame(31, $dt1->diffInHoursFiltered(function (Carbon $date)
+        {
+            return $date->hour === 9;
+        }, $dt2));
+    }
+
+    public function testDiffInHoursFilteredNegative()
+    {
+        $dt1 = Carbon::createFromDate(2000, 1, 31)->endOfDay();
+        $dt2 = Carbon::createFromDate(2000, 1, 1)->startOfDay();
+
+        $this->assertSame(-31, $dt1->diffInHoursFiltered(function (Carbon $date)
+        {
+            return $date->hour === 9;
+        }, $dt2, false));
+    }
+
+    public function testDiffInHoursFilteredWorkHoursPerWeek()
+    {
+        $dt1 = Carbon::createFromDate(2000, 1, 5)->endOfDay();
+        $dt2 = Carbon::createFromDate(2000, 1, 1)->startOfDay();
+
+        $this->assertSame(40, $dt1->diffInHoursFiltered(function (Carbon $date)
+        {
+            return ($date->hour > 8 && $date->hour < 17);
+        }, $dt2));
+    }
+
+    public function testDiffFilteredUsingMinutesPositiveWithMutated()
+    {
+        $dt = Carbon::createFromDate(2000, 1, 1)->startOfDay();
+        $this->assertSame(60, $dt->diffFiltered(CarbonInterval::minute(), function (Carbon $date) {
+            return $date->hour === 12;
+        }, Carbon::createFromDate(2000, 1, 1)->endOfDay()));
+    }
+
+    public function testDiffFilteredPositiveWithSecondObject()
+    {
+        $dt1 = Carbon::create(2000, 1, 1);
+        $dt2 = $dt1->copy()->addSeconds(80);
+
+        $this->assertSame(40, $dt1->diffFiltered(CarbonInterval::second(), function (Carbon $date) {
+            return $date->second % 2 === 0;
+        }, $dt2));
+    }
+
+    public function testDiffFilteredNegativeNoSignWithMutated()
+    {
+        $dt = Carbon::createFromDate(2000, 1, 31);
+
+        $this->assertSame(2, $dt->diffFiltered(CarbonInterval::days(2), function (Carbon $date) {
+            return $date->dayOfWeek === Carbon::SUNDAY;
+        }, $dt->copy()->startOfMonth()));
+    }
+
+    public function testDiffFilteredNegativeNoSignWithSecondObject()
+    {
+        $dt1 = Carbon::createFromDate(2006, 1, 31);
+        $dt2 = Carbon::createFromDate(2000, 1, 1);
+
+        $this->assertSame(7, $dt1->diffFiltered(CarbonInterval::year(), function (Carbon $date) {
+            return $date->month === 1;
+        }, $dt2));
+    }
+
+    public function testDiffFilteredNegativeWithSignWithMutated()
+    {
+        $dt = Carbon::createFromDate(2000, 1, 31);
+        $this->assertSame(-4, $dt->diffFiltered(CarbonInterval::week(), function (Carbon $date) {
+            return $date->month === 12;
+        }, $dt->copy()->subMonths(3), false));
+    }
+
+    public function testDiffFilteredNegativeWithSignWithSecondObject()
+    {
+        $dt1 = Carbon::createFromDate(2001, 1, 31);
+        $dt2 = Carbon::createFromDate(1999, 1, 1);
+
+        $this->assertSame(-12, $dt1->diffFiltered(CarbonInterval::month(), function (Carbon $date) {
+            return $date->year === 2000;
         }, $dt2, false));
     }
 
@@ -282,7 +365,9 @@ class DiffTest extends TestFixture
 
     public function testDiffInHoursVsDefaultNow()
     {
+        Carbon::setTestNow(Carbon::create(2012, 1, 15));
         $this->assertSame(48, Carbon::now()->subDays(2)->diffInHours());
+        Carbon::setTestNow();
     }
 
     public function testDiffInHoursEnsureIsTruncated()
@@ -424,14 +509,18 @@ class DiffTest extends TestFixture
 
     public function testDiffForHumansNowAndHours()
     {
+        Carbon::setTestNow(Carbon::create(2012, 1, 15));
         $d = Carbon::now()->subHours(2);
         $this->assertSame('2 hours ago', $d->diffForHumans());
+        Carbon::setTestNow();
     }
 
     public function testDiffForHumansNowAndNearlyDay()
     {
+        Carbon::setTestNow(Carbon::create(2012, 1, 15));
         $d = Carbon::now()->subHours(23);
         $this->assertSame('23 hours ago', $d->diffForHumans());
+        Carbon::setTestNow();
     }
 
     public function testDiffForHumansNowAndDay()
@@ -472,10 +561,12 @@ class DiffTest extends TestFixture
 
     public function testDiffForHumansNowAndMonth()
     {
+        Carbon::setTestNow(Carbon::create(2012, 1, 1));
         $d = Carbon::now()->subWeeks(4);
         $this->assertSame('4 weeks ago', $d->diffForHumans());
         $d = Carbon::now()->subMonth();
         $this->assertSame('1 month ago', $d->diffForHumans());
+        Carbon::setTestNow();
     }
 
     public function testDiffForHumansNowAndMonths()
@@ -552,8 +643,10 @@ class DiffTest extends TestFixture
 
     public function testDiffForHumansNowAndNearlyFutureDay()
     {
+        Carbon::setTestNow(Carbon::create(2012, 1, 1));
         $d = Carbon::now()->addHours(23);
         $this->assertSame('23 hours from now', $d->diffForHumans());
+        Carbon::setTestNow();
     }
 
     public function testDiffForHumansNowAndFutureDay()
@@ -678,8 +771,10 @@ class DiffTest extends TestFixture
 
     public function testDiffForHumansOtherAndNearlyDay()
     {
+        Carbon::setTestNow(Carbon::create(2012, 1, 1));
         $d = Carbon::now()->addHours(23);
         $this->assertSame('23 hours before', Carbon::now()->diffForHumans($d));
+        Carbon::setTestNow();
     }
 
     public function testDiffForHumansOtherAndDay()
@@ -804,8 +899,10 @@ class DiffTest extends TestFixture
 
     public function testDiffForHumansOtherAndNearlyFutureDay()
     {
+        Carbon::setTestNow(Carbon::create(2012, 1, 15));
         $d = Carbon::now()->subHours(23);
         $this->assertSame('23 hours after', Carbon::now()->diffForHumans($d));
+        Carbon::setTestNow();
     }
 
     public function testDiffForHumansOtherAndFutureDay()
@@ -846,10 +943,12 @@ class DiffTest extends TestFixture
 
     public function testDiffForHumansOtherAndFutureMonth()
     {
+        Carbon::setTestNow(Carbon::create(2012, 1, 1));
         $d = Carbon::now()->subWeeks(4);
         $this->assertSame('4 weeks after', Carbon::now()->diffForHumans($d));
         $d = Carbon::now()->subMonth();
         $this->assertSame('1 month after', Carbon::now()->diffForHumans($d));
+        Carbon::setTestNow();
     }
 
     public function testDiffForHumansOtherAndFutureMonths()
@@ -932,5 +1031,12 @@ class DiffTest extends TestFixture
         $this->assertSame('1 year', Carbon::now()->diffForHumans($d, true));
         $d = Carbon::now()->addYears(1);
         $this->assertSame('1 year', Carbon::now()->diffForHumans($d, true));
+    }
+
+    public function testDiffForHumansWithShorterMonthShouldStillBeAMonth()
+    {
+        $feb15 = Carbon::parse('2015-02-15');
+        $mar15 = Carbon::parse('2015-03-15');
+        $this->assertSame('1 month after', $mar15->diffForHumans($feb15));
     }
 }

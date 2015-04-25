@@ -36,6 +36,11 @@ class FormController extends Controller{
         }
  *
  */
+    public function __construct(){
+        DB::connection()->enableQueryLog();
+        $this->middleware('auth');
+    }
+
     public function postInsertInTable(){
 
         $_errors = [];

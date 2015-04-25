@@ -7,16 +7,17 @@ function __ready__(win,doc){
         properties[i].addEventListener( 'click', propertyStateChanged);
     }
 
-    var exist_subprops = doc.getElementsByClassName('sub-property row hidden');
+    var exist_subprops = doc.querySelectorAll('.sub-property.row.hidden');
 
-    for(var i= 0,ln=exist_subprops.length;i<ln;i++){
+        for(var i= 0,ln=exist_subprops.length;i<ln;i++){
+
         if(exist_subprops[i]) {
             if (exist_subprops[i].getElementsByClassName('subproperty-was-set')[0]) {
                 var check = null;
                 if (check = exist_subprops[i].parentNode.getElementsByTagName('input')[0]) {
                     check.setAttribute('checked', 'checked');
                     check.parentNode.setAttribute('class','checked');
-                    exist_subprops[i].setAttribute('class', 'sub-property row');
+                    exist_subprops[i].classList.remove('hidden');
                 }
             }
         }

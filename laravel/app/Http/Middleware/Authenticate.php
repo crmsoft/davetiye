@@ -42,8 +42,9 @@ class Authenticate {
 			{
 				return redirect()->guest('/');
 			}
-		}
-
+		}else if( $this->auth->user()->role != 'admin' ){
+            return redirect()->guest('/');
+        }
 		return $next($request);
 	}
 

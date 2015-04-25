@@ -1,23 +1,6 @@
 /**
  * Created by ahtem on 13.02.2015.
  */
-
-function roundCheck( sity ){
-    sity = round(sity,2);
-
-    var tmp = sity.toString().split('.');
-    console.log(tmp);
-    if(tmp[2] && tmp[2].length > 2){
-        tmp = Number( tmp[1] +'.'+ tmp[2].substring(0, 2) );
-        console.log(tmp);
-        return tmp;
-    }
-
-    return sity;
-}
-
-function round(value, decimals) {return Number(Math.round(value+'e'+decimals)+'e-'+decimals);}
-
 (function(){
 'use strict';
 
@@ -31,25 +14,12 @@ function round(value, decimals) {return Number(Math.round(value+'e'+decimals)+'e
 
     /////////////------------server---request------------////////////////
     function getData(){
-        if (window.XMLHttpRequest) { // Mozilla, Safari, ...
-            httpRequest = new XMLHttpRequest();
-        } else if (window.ActiveXObject) { // IE
-            console.log('ActiveXObject');
-            try {
-                httpRequest = new ActiveXObject("MSXML2.XMLHTTP.3.0")
-            }catch (e) {
-                try { httpRequest = new ActiveXObject("Microsoft.XMLHTTP"); }catch (e) {}
-            }
-        }
-
-        if(!httpRequest){
-           // appStop();
-        }
-
-        httpRequest.open('POST', window.location.origin + '/products/detailed/post', true);
+        httpRequest = _ajax({
+                           url: window.location.origin + '/products/detailed/post',
+                           method:'POST',
+                           csrf: document.getElementsByName('csrf-token')[0].getAttribute('content')
+                        });
         httpRequest.onreadystatechange = handleResponse;
-        httpRequest.setRequestHeader('X-CSRF-TOKEN', document.getElementsByName('csrf-token')[0].getAttribute('content'));
-        httpRequest.send();
     }
     ///////////////////-------end----request--------//////////////////
     ///////////////////-------handle----request-------////////////////
@@ -76,12 +46,12 @@ function round(value, decimals) {return Number(Math.round(value+'e'+decimals)+'e
 
         if( quantities.length > 1 ){
 
-            var quantitySelect = document.getElementById('adet');
+            var quantitySelect = getId('adet');
             if(!quantitySelect){
                 alert("We are sorry, but we encountered some problems and need reload this page!");
                 window.location.reload();
             }
-            addSelectEvents("change", quantitySelect, handleQuantityChange );
+            addEvent("change", quantitySelect, handleQuantityChange );
             quantitySelect.disabled = false;
         }
         console.log('done');
@@ -103,11 +73,12 @@ function round(value, decimals) {return Number(Math.round(value+'e'+decimals)+'e
     }
 
     function handleQuantityChange( e ){
-        var content = document.getElementById('product_subproperties');
+        var content = getId('product_subproperties');
         var rows = content.querySelectorAll('tr'), parent = content.querySelector('tbody');
 
         if( rows && parent ) {
             var qu = e.target;
+
             var selected = groups[qu.options[qu.selectedIndex].text];
 
             if(selected) { userTicks = [];
@@ -169,9 +140,6 @@ function round(value, decimals) {return Number(Math.round(value+'e'+decimals)+'e
     }
 
     ///////////////////-------end----handle-------////////////////
-    function appStop(){
-      //  window.location =  window.location.origin + '/abort';
-    }
 
     function focusHandler( e ){
         box_old_val = parseFloat(e.target[e.target.selectedIndex].value);
@@ -187,30 +155,15 @@ function round(value, decimals) {return Number(Math.round(value+'e'+decimals)+'e
             price.innerHTML = roundCheck(curr);
     }
 
-    function addSelectEvents( event, box, handler ){
-        if (box.addEventListener) {
-            // DOM2 standard
-            box.addEventListener(event, handler, false);
-        }
-        else if (box.attachEvent) {
-            // IE fallback
-            box.attachEvent("on"+event, handler);
-        }
-        else {
-            // DOM0 fallback
-            box["on"+event] = handler;
-        }
-    }
-
     function resolveStartPage( oto ){
-        var content = document.getElementById('product_subproperties');
+        var content = getId('product_subproperties');
         var subprops = content.querySelectorAll('select');
 
         var total = 0, smallest = 0, smallest_index = 0;
         for(var i=0,ln=subprops.length;i<(ln-1);i++){
 
-        addSelectEvents("focus",subprops[i], focusHandler);
-        addSelectEvents("change",subprops[i], changeHandler);
+        addEvent("focus",subprops[i], focusHandler);
+        addEvent("change",subprops[i], changeHandler);
 
             var opt = subprops[i].options;
             smallest = opt[0].value; smallest_index = 0;
@@ -231,38 +184,24 @@ function round(value, decimals) {return Number(Math.round(value+'e'+decimals)+'e
             total += parseFloat(smallest);
         }
         // empty first start
-        if(Object.keys(groups).length === 0){
+        /*if(Object.keys(groups).length === 0){
             opt = subprops[ln-1].options;
             smallest = opt[0].value;
             var j= 0,l=opt.length;
 
             for (; j < l; j++) {
-                if (parseFloat(opt[j].value) < parseFloat(smallest)) {
+                if (opt[j].getAttribute('id')) { // :min_quantity
                     subprops[ln-1].options[ opt[j].index ].selected = true;
                     break;
                 }
             }
-        }
+        }*/
 
-        total = (total + parseFloat(subprops[ln-1].options[subprops[ln-1].selectedIndex].value));
-        setId( 'product_total_price', roundCheck(total) );
+        total = (total + parseFloat(subprops[ln-1].value));
+        setId( 'product_total_price', false, roundCheck(total) );
     }
-
-    function setId( selector, val ){
-        return document.getElementById(selector).innerHTML = val;
-    }
-
-    function write( msg, type ){
-        if(type){
-            console.log( msg );
-        }else{
-            console.error(msg);
-        }
-    }
-
-
     // start watcher - main
-    addSelectEvents('DOMContentLoaded', document, docReady);
+    addEvent('DOMContentLoaded', document, docReady);
 
     function imageGallery(){
 
@@ -283,67 +222,3 @@ function round(value, decimals) {return Number(Math.round(value+'e'+decimals)+'e
     }
 
 })();
-
-
-
-// emulate localStorage global var if old engine is case...
-if (!window.localStorage) {
-    Object.defineProperty(window, "localStorage", new (function () {
-        var aKeys = [], oStorage = {};
-        Object.defineProperty(oStorage, "getItem", {
-            value: function (sKey) { return sKey ? this[sKey] : null; },
-            writable: false,
-            configurable: false,
-            enumerable: false
-        });
-        Object.defineProperty(oStorage, "key", {
-            value: function (nKeyId) { return aKeys[nKeyId]; },
-            writable: false,
-            configurable: false,
-            enumerable: false
-        });
-        Object.defineProperty(oStorage, "setItem", {
-            value: function (sKey, sValue) {
-                if(!sKey) { return; }
-                document.cookie = escape(sKey) + "=" + escape(sValue) + "; expires=Tue, 19 Jan 2038 03:14:07 GMT; path=/";
-            },
-            writable: false,
-            configurable: false,
-            enumerable: false
-        });
-        Object.defineProperty(oStorage, "length", {
-            get: function () { return aKeys.length; },
-            configurable: false,
-            enumerable: false
-        });
-        Object.defineProperty(oStorage, "removeItem", {
-            value: function (sKey) {
-                if(!sKey) { return; }
-                document.cookie = escape(sKey) + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
-            },
-            writable: false,
-            configurable: false,
-            enumerable: false
-        });
-        this.get = function () {
-            var iThisIndx;
-            for (var sKey in oStorage) {
-                iThisIndx = aKeys.indexOf(sKey);
-                if (iThisIndx === -1) { oStorage.setItem(sKey, oStorage[sKey]); }
-                else { aKeys.splice(iThisIndx, 1); }
-                delete oStorage[sKey];
-            }
-            for (aKeys; aKeys.length > 0; aKeys.splice(0, 1)) { oStorage.removeItem(aKeys[0]); }
-            for (var aCouple, iKey, nIdx = 0, aCouples = document.cookie.split(/\s*;\s*/); nIdx < aCouples.length; nIdx++) {
-                aCouple = aCouples[nIdx].split(/\s*=\s*/);
-                if (aCouple.length > 1) {
-                    oStorage[iKey = unescape(aCouple[0])] = unescape(aCouple[1]);
-                    aKeys.push(iKey);
-                }
-            }
-            return oStorage;
-        };
-        this.configurable = false;
-        this.enumerable = true;
-    })());
-}

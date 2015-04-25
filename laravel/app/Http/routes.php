@@ -32,15 +32,39 @@ Route::get('/urunler/{subcategory}/{id}', [
     'uses' => 'web\DefaultController@getProductById'
 ])->where(['subcategory' => '[A-Za-z-]+', 'id' => '[0-9]+']);
 
-
 /////--------------POST--------------------///////
 
 
 Route::post('/products/detailed/post',[
     'as' => 'web-get-product-details-from-server',
-    'uses' => 'web\DefaultController@postProductDetails'
+    'uses' => 'web\FormController@postProductDetails'
 ]);
 
+Route::post('/products/by/quantity/props',[
+    'as' => 'web-get-product-by-q-and-p',
+    'uses' => 'web\FormController@postProductByPropsAndQuantity'
+]);
+
+Route::post('/check/bucket',[
+   'as' => 'web-check-bucket',
+    'uses' => 'web\FormController@postCheckBucket'
+]);
+
+/* group check out box --> only logged in users do */
+
+Route::group(['middleware' => 'client'], function() {
+
+    Route::get('/sepetim',[
+        'as'=>'web-get-shopping-box',
+        'uses'=>'web\DefaultController@getShoppingBox'
+    ]);
+
+    Route::post('/user/check-out/step1', [
+        'as' => 'user-check-out-step-1',
+        'uses' => 'web\FormController@postUserCheckOutStep1'
+    ]);
+
+});
 ////--------------End----------------------//////
 
 /////---------------CMS--------------------///////

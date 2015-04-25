@@ -4,8 +4,8 @@ use App\Models\Utils\Utills;
 $u = new Utills(); ?>
 @section('content')
     {!! Html::style('/css/tab.css') !!}
-    {!! Html::style('/bower_components/lightslider/lightSlider/css/lightSlider.css') !!}
-    {!! Html::style('/bower_components/lightgallery/light-gallery/css/lightGallery.css') !!}
+    {!! Html::style('/bower_components/lightslider/src/css/lightslider.css') !!}
+    {!! Html::style('bower_components/lightgallery/light-gallery/css/lightGallery.css') !!}
 
     <style>
         ul{
@@ -25,40 +25,26 @@ $u = new Utills(); ?>
         }
     </style>
     {!! Html::script('http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js') !!}
-    {!! Html::script('/bower_components/lightslider/lightSlider/js/jquery.lightSlider.js') !!}
+    {!! Html::script('/bower_components/lightslider/dist/js/lightslider.min.js') !!}
     {!! Html::script('/bower_components/lightgallery/light-gallery/js/lightGallery.min.js') !!}
 
     {!! Html::script('/scripts/custom/tab.js') !!}
     {!! Html::script('/scripts/custom/product-change.js') !!}
+    {!! Html::script('/scripts/custom/box-add.js') !!}
 
-    <div class="side-bar">
-        <div class="musteri-hizmetleri"></div>
-        <div class="kampanya fl">{!! Html::image('img/decor/img-garanti.jpg','',array('width'=>"118", 'height'=>"126")) !!}</div>
-        <div class="kampanya fr">{!! Html::image('img/decor/img-max.jpg','',array('width'=>"118", 'height'=>"126")) !!}</div>
-        <div class="sub-menu">
-            <ul>
-                @foreach( $categories as $key=>$val )
-                    <?php $url = $u->seoUrl($val->Title); ?>
-                    <a href="{!! URL::to( 'urunler', [ $url ] ) !!}">
-                        <li class="{!! ($url == Session::get('subcategory')) ? 'act':'' !!}" >{!! $val->Title !!}</li>
-                    </a>
-                @endforeach
-            </ul>
-        </div>
-    </div>
+    @include('layouts.side-bar')
 
     @if(Session::has('warning'))
         <div class="alert alert-warning" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            {!!Session::get('warning') !!}
+            {!!Session::pull('warning') !!}
         </div>
     @else
-        @if(isset($products[$st_index]->img))
+        @if(isset($products[$st_index]->img) || true)
             <?php
             $onceki_ozellik = $products[$st_index]->oz;
             $total_props = count($products);
             $quantity = [];$oncel_adet = '';
-
             ?>
             <div class="content1">
                 <div class="nav">
@@ -67,41 +53,46 @@ $u = new Utills(); ?>
                         <li>/</li>
                         <li><a href="{!! route('web-get-subcategory-products', Session::get('subcategory') ) !!}">{!! ucwords($u->removeSlahes(Route::input('subcategory')))  !!}</a></li>
                         <li>/</li>
-                        <li class="act">{!!$products[$st_index]->ua !!}</li>
+                        <li id="product" class="act">{!!$products[$st_index]->ua !!}</li>
                     </ul>
                 </div>
                 <div class="urun-thumb">
-                    <div class="demo">
-                        <ul id="demo" class="content-slider">
-                            @foreach($gallery as $key=>$value)
-                                <li data-thumb="{!! '/img/big/'.$value['ImageName'] !!}" data-src="{!! '/img/big/'.$value['ImageName'] !!}">
-                                    <a href="javascript:;">
-                                        {!! Html::image('img/big/'.$value['ImageName'],'urun',['width'=>'310','height'=>'310']) !!}
-                                        <div class="incele"></div>
-                                    </a>
-                                </li>
-                            @endforeach
-                        </ul>
-                    </div>
+                    @if(!isset($products[$st_index]->img))
+                        {!! Html::image('http://www.placehold.it/239x239/EFEFEF/AAAAAA&text=Ürün Görselleri Bulunamadı','',array('width'=>"239", 'height'=>"239")) !!}
+                    @else
+                        <div class="demo">
+                            <ul id="demo" class="content-slider">
+                                @foreach($gallery as $key=>$value)
+                                    <li data-thumb="{!! '/img/big/'.$value['ImageName'] !!}" data-src="{!! '/img/big/'.$value['ImageName'] !!}">
+                                        <a href="javascript:;">
+                                            {!! Html::image('img/big/'.$value['ImageName'],'urun',['width'=>'310','height'=>'310']) !!}
+                                            <div class="incele"></div>
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                 </div>
                 <div class="urun-info">
-                    <table border="0" cellspacing="0" cellpadding="0" id="product_subproperties">
+                    <table border="0" cellspacing="0" cellpadding="0" data-rel="{{ Session::get('id') }}" id="product_subproperties">
                         <tr>
                             <th width="108" align="left" valign="middle"><span>FİYAT</span></th>
                             <th width="172" align="left" valign="middle"><em id="product_total_price">0</em> TL</th>
                         </tr>
                         <tr>
                             <td align="left" valign="middle"><label for="alt_oz1">{!! $products[$st_index]->oz !!}</label></td>
-                            <td><select name="alt_oz1" id="alt_oz1">
-                                    <option data-rel='{!! mb_strtolower($products[$st_index]->aoid) !!}' value="{!!$products[$st_index]->il !!}">{!! $products[$st_index]->ao  !!}</option>
-                                    @for($i=1;$i<$total_props; $i++)
+                            <td>
+                                <select name="alt_oz1" id="alt_oz1">
+                                    {{--<option data-rel='{!! mb_strtolower($products[$st_index]->aoid) !!}' value="{!!$products[$st_index]->il !!}">{!! $products[$st_index]->ao  !!}</option>
+                                 --}}@for($i=0;$i<$total_props; $i++)
                                         @if( $minQ->adet != $products[$i]->adet )
                                             <?php
                                             $quantity[$products[$i]->adet] = "<option value='".$products[$i]->bf."'>".$products[$i]->adet."</option>";
                                             continue;
                                             ?>
                                         @else
-                                            <?php $quantity[$minQ->adet] = "<option value='".$minQ->bf."'>".$minQ->adet."</option>"; ?>
+                                            <?php $quantity[$minQ->adet] = "<option selected='selected' value='".$minQ->bf."'>".$minQ->adet."</option>"; ?>
                                         @endif
                                         @if( $onceki_ozellik == $products[$i]->oz )
                                             <option data-rel="{!! mb_strtolower($products[$i]->aoid) !!}" value="{!!$products[$i]->il !!}">{!! $products[$i]->ao  !!}</option>
@@ -134,8 +125,12 @@ $u = new Utills(); ?>
                         </tr>
                     </table>
                     <div class="cleaner"></div>
-                    <a href="sepetim.html" class="btn-sepete-ekle">SEPETE EKLE</a>
-                    <a href="sepetim.html" class="btn-hemen-al">HEMEN AL</a>
+                    <a href="javascript:void(0)" id="add_to_box" class="btn btn-sepete-ekle">SEPETE EKLE</a>
+
+                    <form action="{{route('web-check-bucket')}}" id="check_out" method="post">
+                        <input type="submit" class="btn btn-hemen-al" value="HEMEN AL" />
+                        {!! Form::token() !!}
+                    </form>
                 </div>
                 @else
                     <div class="alert alert-warning" role="alert">

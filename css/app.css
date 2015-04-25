@@ -6241,7 +6241,7 @@ body{ font-family:Tahoma, Geneva, sans-serif; text-decoration:none; background:#
 .logo{ position:relative; float:left; width:220px; height:62px; margin:35px 19px 3px auto; background:url(/img/decor/logo.png) no-repeat;}
 
 .top-user{ position:relative; width:720px; float:right;  margin:10px auto 15px auto;}
-.top-sepet{ position:relative; float:right;}
+.top-sepet{ position:relative; float:right; cursor: pointer; }
 .top-sepet p{ font-size:12px; color:#8d8d8d; margin: 0 !important; }
 .top-sepet p:after{ content:url(/img/decor/ico-sepet.png); margin-left:15px; }
 
@@ -6274,7 +6274,7 @@ body{ font-family:Tahoma, Geneva, sans-serif; text-decoration:none; background:#
 .item3{ float:left; width:241px;}
 
 .sml-box{ float:left; width:159px; height:159px; margin:1px;}
-.md-box{ float:left; width:239px; height:239px; margin:1px;}
+.md-box{ float:left; width:239px; height:249px; margin:1px;}
 .big-box{ float:left; width:319px; height:320px; margin:1px;}
 
 .sml-box h6, .md-box h6, .big-box h6{ position:relative; bottom:25px; height:25px; padding:4px 0; width:inherit; text-align:center; font-family:Tahoma, Geneva, sans-serif; font-size:16px; font-weight:normal; color:#fff;}
@@ -6382,13 +6382,13 @@ body{ font-family:Tahoma, Geneva, sans-serif; text-decoration:none; background:#
 .sepet-box table h4{ font-size:20px; font-weight:normal; color:#3b3b3b;}
 .sepet-box table h5{ font-size:20px; color:#a00000;}
 
-.btn-uygula{ float:left; width:90px; height:15px; padding:6px 0; text-align:center; font-size:12px; color:#fff; background:#8d8d8d; margin-left:5px;}
+.btn-uygula{ float:left; width:90px; padding:6px 0; text-align:center; font-size:12px; color:#fff; background:#8d8d8d; margin-left:5px;}
 .btn-uygula:hover{background:#7e7e7e;}
 
-.btn-alisveris{ float:left; width:180px; height:17px; padding:8px 0; text-align:center; font-size:14px; color:#fff; background:#8d8d8d; margin-left:5px;}
+.btn-alisveris{ float:left; width:180px; padding:8px 0; text-align:center; font-size:14px; color:#fff; background:#8d8d8d; margin-left:5px;}
 .btn-alisveris:hover{background:#7e7e7e;}
 
-.btn-odeme{ float:right; width:180px; height:17px; padding:8px 0; text-align:center; font-size:14px; color:#fff; background:#385ba3; }
+.btn-odeme{ border: none; float:right; width:180px; padding:8px 0; text-align:center; font-size:14px; color:#fff; background:#385ba3; }
 .btn-odeme:hover{background:#2c4b8b;}
 
 .btn-ileri{ float:right; width:180px; height:17px; padding:8px 0; margin:23px 5px 0 0; text-align:center; font-size:14px; color:#fff; background:#385ba3; }
@@ -6398,20 +6398,20 @@ body{ font-family:Tahoma, Geneva, sans-serif; text-decoration:none; background:#
 .btn-dosya:hover{background:#7d7d7d;}
 
 .form-box{ position:relative; width:340px; margin:auto 4px 10px; border:1px solid #d0d0d0; font-size:14px; color:#9b9b9b;}
-.form-box h2, .form-box2 h2{ font-size:16px; color:#3b3b3b; padding:15px; border-bottom:1px solid #d0d0d0;}
+.form-box h2, .form-box2 h2{ font-size:16px; color:#3b3b3b; padding:20px; padding-top: 0; border-bottom:1px solid #d0d0d0;}
 .form-box-content{ margin:15px; }
-.form-info{ position:relative; width:260px; padding:40px; margin:auto 4px 10px; border:1px solid #d0d0d0; font-size:14px; color:#888;}
+.form-info{ position:relative; width:340px; padding:40px; margin:auto 4px 10px; border:1px solid #d0d0d0; font-size:14px; color:#888;}
 .form-info a,.form-info a:hover{ color:#1b1363;}
 .form-box-content table td{ padding:4px 5px; }
 .form-box span{font-size:12px; color:#9b9b9b; line-height:14px;}
 
 .form-box2{ float:left; position:relative; width:700px; border:1px solid #d0d0d0; font-size:14px; color:#9b9b9b;}
 
-.input1, .input2, .input3, .input4, .input5, .input6, .input7{ float:left; height:15px; padding:5px; background:#eee; border:1px solid #d2d2d2; color:#7e7e7e;}
+.input1, .input2, .input3, .input4, .input5, .input6, .input7{ float:left; padding:5px; background:#eee; border:1px solid #d2d2d2; color:#7e7e7e;}
 .input1{ width:120px;}
 .input2{ width:190px;}
 .input3{ width:160px;}
-.input4{ width:30px; margin-right:5px;}
+.input4{ width:45px; margin-right:5px;}
 .input5{ width:190px; height:60px; font-family:Tahoma, Geneva, sans-serif; }
 .input6{ width:202px; height:27px;}
 .input7{ width:100px; }
@@ -6422,3 +6422,67 @@ body{ font-family:Tahoma, Geneva, sans-serif; text-decoration:none; background:#
 .islem-sonucu h3 span{ font-size:24px; color:#3b3b3b;}
 
 .sub-menu li.act{ background: #1b1363; color: #fff; }
+
+.busy-btn{
+    background: url("/img/decor/wait.gif") no-repeat center center !important;
+    border: 1px solid #D7D7D7;
+}
+
+.busy-span{
+    background: url("/img/decor/wait.gif") no-repeat center center !important;
+    border: 1px solid #D7D7D7;
+    height: 20px;
+    width: 80px;
+    display: block;
+    display: none;
+}
+
+.pointer{
+    cursor: pointer;
+}
+
+.close-icon{
+    color: #d9534f;
+}
+
+.dropdown{
+    position: absolute;
+    margin-bottom: 5px;
+    clear: left;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    display: none;
+    float: left;
+    min-width: 230px;
+    padding: 5px 5px;
+    font-size: 14px;
+    text-align: left;
+    background-color: #fff;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: 4px;
+    -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
+    box-shadow: 0 6px 12px rgba(0,0,0,.175);
+}
+
+.dr-box{
+    width: 370px !important;
+}
+.dr-box td{
+    padding: 5px;
+}
+
+.btn-box-add{
+    margin: 0;
+    float: right;
+}
+
+.shooping-box-last{
+    border-top: 1px solid #DDD;
+}
+.shooping-box-last > td{
+    padding-top: 5px;
+}

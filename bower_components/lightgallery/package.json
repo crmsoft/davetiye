@@ -1,7 +1,7 @@
 {
   "name": "lightgallery",
   "description": "Responsive & Touch-Friendly jQuery Gallery Lightbox Plugin",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "keywords": [
     "gallery",
     "lightbox",
@@ -20,6 +20,7 @@
     "url": "https://github.com/sachinchoolur"
   },
   "homepage": "https://github.com/sachinchoolur/lightGallery",
+  "main": "light-gallery/js/lightGallery.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/sachinchoolur/lightGallery.git"
@@ -27,11 +28,13 @@
   "bugs": {
     "url": "https://github.com/sachinchoolur/lightGallery/issues"
   },
-  "license": {
-    "type": "MIT",
-    "url": "http://opensource.org/licenses/MIT"
-  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://opensource.org/licenses/MIT"
+    }
+  ],
   "dependencies": {
-    "jquery": ">= 1.5.0"
+    "jquery": ">=1.5.0"
   }
 }

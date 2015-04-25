@@ -164,9 +164,7 @@ class FilesystemAdapter implements FilesystemContract, CloudFilesystemContract {
 	 */
 	public function move($from, $to)
 	{
-		$this->driver->copy($from, $to);
-
-		$this->driver->delete($from);
+		$this->driver->rename($from, $to);
 	}
 
 	/**
@@ -178,6 +176,17 @@ class FilesystemAdapter implements FilesystemContract, CloudFilesystemContract {
 	public function size($path)
 	{
 		return $this->driver->getSize($path);
+	}
+
+	/**
+	 * Get the mime-type of a given file.
+	 *
+	 * @param  string  $path
+	 * @return string|false
+	 */
+	public function mimeType($path)
+	{
+		return $this->driver->getMimetype($path);
 	}
 
 	/**

@@ -1,24 +1,8 @@
 @extends('layouts.web')
 <?php use App\Models\Utils\Utills; $u = new Utills();  ?>
 @section('content')
+    @include('layouts.side-bar')
 
-    <div class="side-bar">
-        <div class="musteri-hizmetleri"></div>
-        <div class="kampanya fl">{!! Html::image('img/decor/img-garanti.jpg','',array('width'=>"118", 'height'=>"126")) !!}</div>
-        <div class="kampanya fr">{!! Html::image('img/decor/img-max.jpg','',array('width'=>"118", 'height'=>"126")) !!}</div>
-        <div class="sub-menu">
-            <ul>
-                @foreach( $categories as $key=>$val )
-                    <?php $url = $u->seoUrl($val->Title); ?>
-                    <a href="{!! URL::to( 'urunler', [ $url ] ) !!}">
-                        <li class="{!! ($url == Session::get('subcategory')) ? 'act':'' !!}">
-                            {!! $val->Title !!}
-                        </li>
-                    </a>
-                @endforeach
-            </ul>
-        </div>
-    </div>
     @if(Session::has('warning'))
         <div class="item3">
             {!! Session::get('warning') !!}
@@ -29,7 +13,11 @@
             <a href="{!! URL::to( 'urunler', [ Route::input('subcategory'), $u->seoUrl($value->ProductID) ] ) !!}">
                 <div class="pro">
                     <div class="btn-pro"></div>
-                    {!! Html::image('img/thumbs/'.$value->ImageName,'',array('width'=>"239", 'height'=>"239")) !!}
+                    @if($value->ImageName)
+                        {!! Html::image('img/thumbs/'.$value->ImageName,'',array('width'=>"239", 'height'=>"239")) !!}
+                    @else
+                        {!! Html::image('http://www.placehold.it/239x239/EFEFEF/AAAAAA&text='.$value->Title,'',array('width'=>"239", 'height'=>"239")) !!}
+                    @endif
                     <div class="pro-info">
                         <span class="fl" style="font-size: 12px;padding-top: 2px;">{!! $value->Title !!}</span>
                         <span class="fr">{!! $price !!} TL</span>

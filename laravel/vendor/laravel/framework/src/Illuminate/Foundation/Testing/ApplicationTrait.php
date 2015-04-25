@@ -1,6 +1,5 @@
 <?php namespace Illuminate\Foundation\Testing;
 
-use Dotenv;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Auth\Authenticatable as UserContract;
 
@@ -21,7 +20,7 @@ trait ApplicationTrait {
 	protected $response;
 
 	/**
-	 * The last code returned by artisan cli
+	 * The last code returned by artisan cli.
 	 *
 	 * @var int
 	 */
@@ -182,7 +181,7 @@ trait ApplicationTrait {
 	}
 
 	/**
-	 * Call artisan command and return code
+	 * Call artisan command and return code.
 	 *
 	 * @param string  $command
 	 * @param array   $parameters

@@ -50,7 +50,7 @@
                     <div class="col-sm-6">
                         <select name="SubCategoryID" id="" size="4" class="form-control" required>
                             @foreach($sbcats as $key=>$val)
-                                <option value="{!! $val->CategoryID !!}">{!! $val->Title !!}</option>
+                                <option value="{!! $val->SubCategoryID !!}">{!! $val->Title !!}</option>
                             @endforeach
                         </select>
                     </div>

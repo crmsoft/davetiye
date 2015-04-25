@@ -153,6 +153,32 @@ class Utills {
         }
     }
 
+    public  function getProductDetails( $id, $quantity, $sbpr_arr ){
+        // group by `ProductID` order by `T_Prices`.`QuantityID`
+
+        $res = DB::select("SELECT
+                T_Product.ProductID as 'id',
+					T_Prices.DefaultPrice as 'bf',
+						T_ProductByProperty.`ExPrice` as 'il',
+						  T_Product.Title as 'ua',
+							T_Property.Title as 'oz',
+							T_SubProperty.SubPropertyID as 'aoid',
+							  T_SubProperty.Title as 'ao',
+								T_Quantity.Title as 'adet'
+								  FROM `T_ProductByProperty`
+									inner join T_Prices on T_ProductByProperty.`QuantityID` = T_Prices.QuantityID
+									  inner join T_Quantity on T_Quantity.QuantityID = T_ProductByProperty.`QuantityID` AND T_Quantity.QuantityID = ?
+										inner join T_Product on T_Product.ProductID = T_ProductByProperty.`ProductID`
+										  inner join T_SubProperty on T_SubProperty.SubPropertyID = T_ProductByProperty.`SubPropertyID` AND T_SubProperty.SubPropertyID in ($sbpr_arr)
+											inner join T_Property on T_Property.PropertyID = T_SubProperty.PropertyID
+											  where T_ProductByProperty.`ProductID` = ? and T_Prices.ProductID = ? and T_ProductByProperty.`QuantityID` in
+													(SELECT `T_Prices`.`QuantityID` FROM `T_Prices` WHERE `ProductID`= ?)
+
+												order by T_Property.Title", [$quantity,$id,$id,$id]);
+
+        return $res;
+    }
+
     public  function getProductById( $id ){
         // group by `ProductID` order by `T_Prices`.`QuantityID`
 

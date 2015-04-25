@@ -6,12 +6,13 @@
  * Time: 14:54
  */
 use App\Http\Controllers\Controller;
+use App\Models\Quantity;
+use Illuminate\Support\Facades\DB;
 use App\Models\ProductGallery;
-use App\Models\SubCategory;
 use App\Models\Utils\Utills;
+use App\Models\SubCategory;
 use App\Models\Product;
-use Symfony\Component\HttpFoundation\Response;
-use Session;use Illuminate\Support\Facades\DB;
+use \Session;
 
 
 class DefaultController extends Controller{
@@ -67,25 +68,30 @@ class DefaultController extends Controller{
         $sb = $u->removeSlahes($sb);
 
         Session::put('id', $id);
-
         $sb = SubCategory::where('Title','=',$sb)->get();
 
-            $dt = Product::where('ProductID','=',$id)->get();
-
-            if( $dt->count() ) {
+        if( $sb->count() ) {
+            $dt = Product::where('ProductID', '=', $id)->where('SubCategoryID', '=', $sb[0]->SubCategoryID)->get();
+            if ($dt->count()) {
                 $dt = $dt[0]->ProductID;
                 $results = $u->getProductById($dt);
 
-                if( !$results ){
-                    Session::flash('warning','<h3 class="mt_35 mr_35">Ürün Bulunamadı!!!</h3>');
+                if (!$results) {
+                    Session::flash('warning', '<h3 class="mt_35 mr_35">Ürün Bulunamadı!!!</h3>');
                     $results = [];
                 }
                 $min_q = $u->getMinQuantity();
                 $start_index = $u->getStartIndex();
-            }else{
-                Session::flash('warning','<h3 class="mt_35 mr_35">Ürün Bulunamadı!!!</h3>');
-                $results = []; $min_q = 0; $start_index = -1;
+            } else {
+                Session::flash('warning', '<h3 class="mt_35 mr_35">Ürün Bulunamadı!!!</h3>');
+                $results = [];
+                $min_q = 0;
+                $start_index = -1;
             }
+        }else{
+            Session::flash('warning', '<h3 class="mt_35 mr_35">Ürün Bulunamadı!!!</h3>');
+            $results = [];
+        }
 
         $cats = SubCategory::Ordered()->Active()->get();
 
@@ -101,13 +107,46 @@ class DefaultController extends Controller{
         ]);
     }
 
-    public function postProductDetails(){
+    public function getShoppingBox(){
 
-        $id = Session::get('id');
+        $properties = SubCategory::all();
 
-        $u = new Utills();
-        $results = $u->getProductById($id);
+        if( !Session::has('res') ){
+            return redirect('/urunler');
+        }
+        $bucket = Session::get('res');
 
-        return response()->json($results);
+         $prs = $props = $prices = $quantity = $tmp['ao'] = $tmp['oz'] = [];$curr = '';
+        foreach($bucket as $key=>$stages){
+            foreach($stages as $k=>$stage) {
+                if ($stage->ua != $curr) {
+                    $prs[] = $curr = $stage->ua;
+                    $prices[$key] = $stage->bf;
+                    $props['ao'][] = $tmp['ao'];
+                    $props['oz'][] = $tmp['oz'];
+                    $quantity['q'][] = Quantity::join('T_Prices','T_Prices.QuantityID','=','T_Quantity.QuantityID')
+                                    ->where('T_Prices.ProductID','=',$stage->id)
+                                    ->get(['T_Quantity.QuantityID','T_Quantity.Title'])->toArray();
+                    $quantity['s'][] = $stage->adet;
+                    $tmp = [];
+                }
+                $tmp['ao'][] = $stage->ao;
+                $tmp['oz'][] = $stage->oz;
+                $prices[$key] += $stage->il;
+            }
+            $curr = '';
+            if(!empty($tmp['ao'])){
+                $props['ao'][] = $tmp['ao'];
+                $props['oz'][] = $tmp['oz'];
+            }
+        }
+
+        return view('web.checkOut.step1')->with([
+            'categories'=>$properties,
+            'products' => $prs,
+            'properties'=>$props,
+            'prices'=>$prices,
+            'quantity'=>$quantity
+        ]);
     }
 }

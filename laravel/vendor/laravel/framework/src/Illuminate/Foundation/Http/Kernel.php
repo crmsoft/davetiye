@@ -81,14 +81,18 @@ class Kernel implements KernelContract {
 	{
 		try
 		{
-			return $this->sendRequestThroughRouter($request);
+			$response = $this->sendRequestThroughRouter($request);
 		}
 		catch (Exception $e)
 		{
 			$this->reportException($e);
 
-			return $this->renderException($request, $e);
+			$response = $this->renderException($request, $e);
 		}
+
+		$this->app['events']->fire('kernel.handled', [$request, $response]);
+
+		return $response;
 	}
 
 	/**
@@ -149,6 +153,38 @@ class Kernel implements KernelContract {
 		}
 
 		return [];
+	}
+
+	/**
+	 * Add a new middleware to beginning of the stack if it does not already exist.
+	 *
+	 * @param  string  $middleware
+	 * @return $this
+	 */
+	public function prependMiddleware($middleware)
+	{
+		if (array_search($middleware, $this->middleware) === false)
+		{
+			array_unshift($this->middleware, $middleware);
+		}
+
+		return $this;
+	}
+
+	/**
+	 * Add a new middleware to end of the stack if it does not already exist.
+	 *
+	 * @param  string  $middleware
+	 * @return $this
+	 */
+	public function pushMiddleware($middleware)
+	{
+		if (array_search($middleware, $this->middleware) === false)
+		{
+			$this->middleware[] = $middleware;
+		}
+
+		return $this;
 	}
 
 	/**

@@ -174,7 +174,7 @@ class Builder {
 		'=', '<', '>', '<=', '>=', '<>', '!=',
 		'like', 'like binary', 'not like', 'between', 'ilike',
 		'&', '|', '^', '<<', '>>',
-		'rlike', 'regexp', 'not regexp', 
+		'rlike', 'regexp', 'not regexp',
 		'~', '~*', '!~', '!~*', 'similar to',
                 'not similar to',
 	);
@@ -454,7 +454,7 @@ class Builder {
 		}
 		elseif ($this->invalidOperatorAndValue($operator, $value))
 		{
-			throw new InvalidArgumentException("Value must be provided.");
+			throw new InvalidArgumentException("Illegal operator and value combination.");
 		}
 
 		// If the columns is actually a Closure instance, we will assume the developer
@@ -1393,7 +1393,7 @@ class Builder {
 		$results = $this->forPage($page, $perPage)->get($columns);
 
 		return new LengthAwarePaginator($results, $total, $perPage, $page, [
-			'path' => Paginator::resolveCurrentPath()
+			'path' => Paginator::resolveCurrentPath(),
 		]);
 	}
 
@@ -1413,7 +1413,7 @@ class Builder {
 		$this->skip(($page - 1) * $perPage)->take($perPage + 1);
 
 		return new Paginator($this->get($columns), $perPage, $page, [
-			'path' => Paginator::resolveCurrentPath()
+			'path' => Paginator::resolveCurrentPath(),
 		]);
 	}
 
@@ -1658,6 +1658,8 @@ class Builder {
 	 */
 	public function insert(array $values)
 	{
+		if (empty($values)) return true;
+
 		// Since every insert gets treated like a batch insert, we will make sure the
 		// bindings are structured in a way that is convenient for building these
 		// inserts statements by verifying the elements are actually an array.

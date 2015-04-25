@@ -113,13 +113,13 @@ class BaseController extends Controller{
 
     public function getAddProduct(){
 
-        Session::put('stage', 'Bir ürün seçin ve ya yeni kleyin');
+        Session::put('stage', 'Bir ürün seçin');
         Session::put('addForm', 'Yeni ürün ekleyin');
         Session::put('title','Yeni ürün ekleme');
 
         $product_list = Product::join('T_SubCategory', 'T_Product.SubCategoryID', '=', 'T_SubCategory.SubCategoryID')
                         ->orderBy('subcategory')
-                        ->get(array('T_Product.*','T_SubCategory.Title as subcategory') );
+                        ->get(array('T_Product.*','T_SubCategory.Title as subcategory', 'T_SubCategory.SubCategoryID as SubCategoryID') );
 
         $subcategories = SubCategory::all();
 

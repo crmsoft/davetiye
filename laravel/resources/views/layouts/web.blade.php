@@ -7,6 +7,10 @@
 
     {!! Html::style('/plugins/bootstrap/css/bootstrap.min.css') !!}
     {!! Html::style('css/app.css') !!}
+    {!! Html::script('/scripts/custom/web-main.js') !!}
+    @if(Route::currentRouteName() == 'web-get-shopping-box')
+        {!! Html::script('/scripts/custom/quantity-change.js') !!}
+    @endif
     <script>
         window.location.origin =  window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port: '');
     </script>
@@ -16,7 +20,10 @@
     <div class="wrap">
         <a href="{!! route('web-get-index') !!}"><div class="logo"></div></a>
         <div class="top-user">
-            <div class="top-sepet"><p>Sepetinizde 0 ürün bulunmaktadır.</p></div>
+            <div id="box_wrapper" class="top-sepet"><p>Sepetinizde <span id="box_total">0</span> ürün bulunmaktadır.</p></div>
+            <div class="dropdown" id="dropdown">
+
+            </div>
         </div>
         <div class="src-box">
             <input name="ara" type="text" value="Ürün Arama" />

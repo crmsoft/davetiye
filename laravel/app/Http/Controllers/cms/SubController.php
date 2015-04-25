@@ -16,6 +16,11 @@ use App\Models\SubCategory;
 use Session;
 class SubController extends Controller{
 
+    public function __construct(){
+        DB::connection()->enableQueryLog();
+        $this->middleware('auth');
+    }
+
     public function getSubCategoryList(){
 
         Session::put('title','Alt Kategori Datayları');

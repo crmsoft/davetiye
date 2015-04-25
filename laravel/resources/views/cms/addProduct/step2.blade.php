@@ -42,15 +42,15 @@
     <div class="row">
         <div class="col-sm-8">
             <form action="{!! route('cms-post-insert-product-stage-3') !!}" class="form-horizontal bordered-row" method="post">
-                @foreach($quantity as $obj)
+                @foreach($quantity as $outer=>$obj)
                     <span class="btn btn-success pull-right">[ {!! $obj['Title'] !!} ]</span>
                 <div class="checks-container">
 
                         @for($i = 0, $cnt = count($properties);$i<$cnt; $i++)
                             <div class="property">
                                 <dev>
-                                    <input name="properties[{!! $obj['QuantityID'] !!}][]" class="form-control" type="checkbox" id="{!! $properties[$i]['PropertyID'] !!}" value="{!! $properties[$i]['PropertyID'] !!}"/>
-                                    <label for="{!! $properties[$i]['PropertyID'] !!}">{!! $properties[$i]['prop'] !!}</label>
+                                    <input name="properties[{!! $obj['QuantityID'] !!}][]" class="form-control" type="checkbox" id="{!! $outer, $properties[$i]['PropertyID'] !!}" value="{!! $properties[$i]['PropertyID'] !!}"/>
+                                    <label for="{!! $outer, $properties[$i]['PropertyID'] !!}">{!! $properties[$i]['prop'] !!}</label>
                                 </dev>
 
                                 <dev class="sub-property row hidden">
@@ -73,7 +73,7 @@
                                                     );
                                                     if(!empty($have)){
                                                         $class = 'subproperty-was-set';
-                                                        $old_val = number_format(($have[array_keys($have)[0]]['ExPrice']),2,'.','');
+                                                        $old_val = number_format(($have[array_keys($have)[0]]['ExPrice']),2);
                                                     }else{
                                                         $old_val = $class = '';
                                                     }

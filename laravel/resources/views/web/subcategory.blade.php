@@ -8,18 +8,7 @@ use App\Models\Utils\Utills;
 ?>
 @section('content')
 
-    <div class="side-bar">
-        <div class="musteri-hizmetleri"></div>
-        <div class="kampanya fl">{!! Html::image('img/decor/img-garanti.jpg','',array('width'=>"118", 'height'=>"126")) !!}</div>
-        <div class="kampanya fr">{!! Html::image('img/decor/img-max.jpg','',array('width'=>"118", 'height'=>"126")) !!}</div>
-        <div class="sub-menu">
-            <ul>
-                @foreach( $categories as $key=>$val )
-                    <a href="{!! URL::to( 'urunler', array( $u->seoUrl($val->Title) ) ) !!}"><li>{!! $val->Title !!}</li></a>
-                @endforeach
-            </ul>
-        </div>
-    </div>
+    @include('layouts.side-bar')
 
     <div class="item3">
         @foreach( $categories as $key=>$value )
