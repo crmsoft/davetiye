@@ -6486,3 +6486,36 @@ body{ font-family:Tahoma, Geneva, sans-serif; text-decoration:none; background:#
 .shooping-box-last > td{
     padding-top: 5px;
 }
+
+.client-login{
+    background: #FFFFFF;
+    padding: 35px;
+}
+
+
+.checkout-options{
+    margin-top: 15px;
+    border-bottom: 1px solid #D2D0D0;
+    padding-bottom: 12px;
+}
+.checkout-options input,label{
+    cursor: pointer;
+}
+
+.login-header {
+    color: #848484;
+    margin-top: 20px;
+    border-bottom: 1px solid #D2D0D0;
+    padding-bottom: 15px;
+}
+.login-header h1{
+    display: inline;
+}
+.login-header strong{
+    float: right;
+    margin-top: 12px;
+}
+
+.control-group {
+    margin-bottom: 10px;
+}

@@ -2,14 +2,23 @@
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Models\Prices;
-use App\Models\ProductByProperty;
 use App\Models\Quantity;
 use App\Models\Utils\Utills;
 use Illuminate\Support\Facades\Input;
 use Session;
+use Illuminate\Http\Request;
+use Illuminate\Contracts\Auth\Guard;
+use App\Services\Registrar;
+use Mail;
 
 class FormController extends Controller {
+
+    protected $auth;
+
+    public function __construct(Guard $auth)
+    {
+        $this->auth = $auth;
+    }
 
     public function postProductDetails(){
 
@@ -52,6 +61,66 @@ class FormController extends Controller {
             return response()->json([ 'res'=>[ number_format($total+$def,2), $bucket[$d[0]]->id ] ]);
         }
         return response()->json(['res'=>'empty']);
+    }
+
+    public function postRegisterClient( Registrar $reg, Request $request ){
+
+        $data = Input::except(['_token']);
+        $validator = $reg->validator($data);
+
+        if (!$validator->fails())
+        {
+            $data['role'] = 'client';$data['code'] = str_random(70);
+            if($res = $reg->create($data)){
+                if($this->sendClientEmail( $data )) {
+                    return response(route('web-client-activate-info'));
+                }
+            }
+        }
+
+        return redirect(route('web-get-register-user'))
+            ->withInput($request->only('email', 'firstname', 'lastname'))
+            ->withErrors(
+                $validator->getMessageBag()->getMessages()
+            );
+    }
+
+    private function sendClientEmail( $data ){
+        Mail::send('emails.confirm', $data, function($message) use ($data)
+        {
+            $message->to($data['email'], 'John Smith')->subject('Welcome!');
+        });
+        return true;
+    }
+
+    public function postLogin(Request $request)
+    {
+        $this->validate($request, [
+            'email' => 'required|email', 'password' => 'required',
+        ]);
+
+        $credentials = $request->only('email', 'password');
+
+        if ($this->auth->attempt(
+            [
+                "email" => $credentials['email'],
+                "password" => $credentials['password'],
+                'active' => '1'
+            ],
+            $request->has('remember')))
+        {
+            return redirect()->intended(route('web-get-shopping-box'));
+        }
+
+        return redirect(route('web-get-register-user'))
+            ->withInput($request->only('email', 'remember'))
+            ->withErrors([
+                'email' => $this->getFailedLoginMessage(),
+            ]);
+    }
+
+    private function getFailedLoginMessage(){
+        return 'E-posta adresiniz ya da şifreniz yanlış.';
     }
 
     public function postUserCheckOutStep1(){

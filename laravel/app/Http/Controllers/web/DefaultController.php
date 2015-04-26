@@ -149,4 +149,18 @@ class DefaultController extends Controller{
             'quantity'=>$quantity
         ]);
     }
+
+    public function getClientRegister(){
+        return view('auth.client');
+    }
+
+    public function getActivate(){
+        return view('auth.clientActivate');
+    }
+
+    public function getLogout()
+    {
+        $this->auth->logout();
+        return redirect('/');
+    }
 }

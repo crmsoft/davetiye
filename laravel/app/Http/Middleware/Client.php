@@ -33,12 +33,10 @@ class Client{
 	 */
 	public function handle($request, Closure $next)
 	{
-        if(!$this->auth->check()){
-            return new RedirectResponse(url('/urunler'));
-        }
-
-        if($this->auth->user()->role == 'client'){
-
+        if ($this->auth->guest()) {
+            if (!$this->auth->check()) {
+                return new RedirectResponse(url('/yeni-uye'));
+            }
         }
 
 		return $next($request);

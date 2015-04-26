@@ -123,15 +123,31 @@ if (!window.localStorage) {
     };
 
     this.getId = function (id, attr) {
-        var el = document.getElementById(id);
-        if (!el) {
+        if(!(id instanceof Object)){
+            var id = document.getElementById(id);
+        }
+        if (!id) {
             return null;
         }
         if (attr) {
-            return el.getAttribute(attr);
+            return id.getAttribute(attr);
         } else {
-            return el;
+            return id;
         }
+    };
+
+    this.removeClass = function(id,cName){
+        if(!(id instanceof Object)){
+            id = getId(id);
+        }
+        if (!id) {
+            return null;
+        }
+        if(id.classList.contains(cName)){
+            id.classList.remove(cName);
+            return true;
+        }
+        return false;
     };
 
     this.setId = function(id, attr, val){
@@ -145,10 +161,14 @@ if (!window.localStorage) {
             if (attr.toLowerCase() === 'class') {
                 if(val instanceof Array){
                     for(var i=val.length-1;i>=0;i--){
-                        id.classList.add(val[i]);
+                        if(!id.classList.contains(val[i])) {
+                            id.classList.add(val[i]);
+                        }
                     }
                 }else{
-                    id.classList.add(val);
+                    if(!id.classList.contains(val)) {
+                        id.classList.add(val);
+                    }
                 }
             } else {
                 id.setAttribute(attr, val);

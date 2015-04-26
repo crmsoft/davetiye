@@ -32,6 +32,21 @@ Route::get('/urunler/{subcategory}/{id}', [
     'uses' => 'web\DefaultController@getProductById'
 ])->where(['subcategory' => '[A-Za-z-]+', 'id' => '[0-9]+']);
 
+Route::get('/yeni-uye',[
+   'as' => 'web-get-register-user',
+    'uses' => 'web\DefaultController@getClientRegister'
+]);
+
+Route::get('/web/logout',[
+    'as' => 'web-log-out-user',
+    'uses' => 'web\DefaultController@getLogout'
+]);
+
+Route::get('/client/activate',[
+    'as' => 'web-client-activate-info',
+    'uses' => 'web\DefaultController@getActivate'
+]);
+
 /////--------------POST--------------------///////
 
 
@@ -49,6 +64,16 @@ Route::post('/check/bucket',[
    'as' => 'web-check-bucket',
     'uses' => 'web\FormController@postCheckBucket'
 ]);
+
+Route::post('web/auth/post-sign-in', array(
+    'as' => 'web-look-up-user',
+    'uses' => 'web\FormController@postLogin'
+));
+
+Route::post('web/auth/post-register', array(
+    'as' => 'web-register-client',
+    'uses' => 'web\FormController@postRegisterClient'
+));
 
 /* group check out box --> only logged in users do */
 
