@@ -13,6 +13,7 @@ use App\Models\Utils\Utills;
 use App\Models\SubCategory;
 use App\Models\Product;
 use \Session;
+use App\User;
 
 
 class DefaultController extends Controller{
@@ -156,6 +157,20 @@ class DefaultController extends Controller{
 
     public function getActivate(){
         return view('auth.clientActivate');
+    }
+
+    public function getClientActivate( $code ){
+        $to = User::where('code',$code)->first();
+
+        if($to){
+            $to->code = '';
+            $to->active = 1;
+            if($to->save()){
+                return 'Activasyon işlemi başarıyla tamalandı';
+            }
+        }
+
+        return 'Bir hata oluştu daha sonra tekrar deneyin';
     }
 
     public function getLogout()

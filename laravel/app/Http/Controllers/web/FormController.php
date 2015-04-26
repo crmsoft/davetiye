@@ -73,7 +73,7 @@ class FormController extends Controller {
             $data['role'] = 'client';$data['code'] = str_random(70);
             if($res = $reg->create($data)){
                 if($this->sendClientEmail( $data )) {
-                    return response(route('web-client-activate-info'));
+                    return redirect(route('web-client-activate-info'));
                 }
             }
         }
@@ -88,7 +88,7 @@ class FormController extends Controller {
     private function sendClientEmail( $data ){
         Mail::send('emails.confirm', $data, function($message) use ($data)
         {
-            $message->to($data['email'], 'John Smith')->subject('Welcome!');
+            $message->to($data['email'], 'John Smith')->subject('Taksitle Reklam!');
         });
         return true;
     }

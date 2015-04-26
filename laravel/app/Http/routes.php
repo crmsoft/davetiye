@@ -47,6 +47,11 @@ Route::get('/client/activate',[
     'uses' => 'web\DefaultController@getActivate'
 ]);
 
+Route::get('/activate/{code}',[
+    'as' => 'web-client-activate',
+    'uses' => 'web\DefaultController@getClientActivate'
+]);
+
 /////--------------POST--------------------///////
 
 
